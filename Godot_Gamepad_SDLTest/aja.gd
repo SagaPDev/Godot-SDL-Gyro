@@ -5,6 +5,7 @@ extends Node3D
 func _ready():
   var Gyro=SDLGyro.new()
   Gyro.sdl_init()
+  Gyro.controller_init()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
