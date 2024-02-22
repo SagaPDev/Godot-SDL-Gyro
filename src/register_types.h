@@ -5,7 +5,7 @@
 
 using namespace godot;
 
-void initialize_sdlyro_module(ModuleInitializationLevel p_level);
-void uninitialize_sdlyro_module(ModuleInitializationLevel p_level);
+void initialize_sdlgyro_module(ModuleInitializationLevel p_level);
+void uninitialize_sdlgyro_module(ModuleInitializationLevel p_level);
 
 #endif // SDLGYRO_REGISTER_TYPES_H

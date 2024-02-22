@@ -15,14 +15,14 @@ env.Append(CPPPATH=["src/"],LIBS='-lSDL2')
 sources = Glob("src/*.cpp")
 if env["platform"] == "macos":
     library = env.SharedLibrary(
-        "demo/bin/libgdexample.{}.{}.framework/libgdexample.{}.{}".format(
+        "Godot_Gamepad_SDLTest/bin/sdlgyro.{}.{}.framework/sdlgyro.{}.{}".format(
             env["platform"], env["target"], env["platform"], env["target"]
         ),
         source=sources,
     )
 else:
     library = env.SharedLibrary(
-        "demo/bin/libgdexample{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
+        "Godot_Gamepad_SDLTest/bin/sdlgyro{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
         source=sources,
     )
 

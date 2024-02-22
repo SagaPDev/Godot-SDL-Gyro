@@ -9,17 +9,10 @@ SDL_GameController *controller =nullptr;
 using namespace godot;
 
 void SDLGyro::_bind_methods() {
+  ClassDB::bind_method(D_METHOD("sdl_init"),&SDLGyro::sdl_init);
 }
 
-SDLGyro::SDLGyro() {
-	// Initialize any variables here.
-
-}
-SDLGyro::~SDLGyro() {
-	// Add your cleanup here.
-}
-
-void SDLGyro::_process(double delta) {
+void SDLGyro::sdl_init() {
 
   /*SDL initializATION*/
   SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
