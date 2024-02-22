@@ -1,12 +1,12 @@
 #ifndef SDLGYRO_H
 #define SDLGYRO_H
 
-#include <godot_cpp/classes/node3d.hpp>
+#include <godot_cpp/classes/object.hpp>
 
 using namespace godot;
 
-  class SDLGyro : public Node3D {
-    GDCLASS(SDLGyro, Node3D);
+  class SDLGyro : public Object{
+    GDCLASS(SDLGyro,Object);
     public:
       void sdl_init();
     protected:
