@@ -4,3 +4,4 @@ compile_commands.json
 *.dblite
 *.os
 *.import
+Godot_Gamepad_SDLtest/.godot/
