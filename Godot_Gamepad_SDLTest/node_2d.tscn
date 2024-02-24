@@ -1,6 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://bnyxsfryy1ljh"]
+[gd_scene load_steps=4 format=3 uid="uid://bnyxsfryy1ljh"]
 
-[ext_resource type="Script" path="res://aja.gd" id="1_n5qyu"]
+[ext_resource type="Script" path="res://test.gd" id="1_n5qyu"]
+[ext_resource type="PackedScene" uid="uid://g5c5kcxolume" path="res://scene.gltf" id="2_wi142"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_8xunt"]
 
 [node name="Node3D" type="Node3D"]
+rotation_edit_mode = 1
 script = ExtResource("1_n5qyu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+rotation_edit_mode = 1
+visible = false
+mesh = SubResource("CapsuleMesh_8xunt")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.0917102, 0, 0.995786, 0, 1, 0, -0.995786, 0, 0.0917102, 4.5454, 0, 0)
+rotation_edit_mode = 1
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("2_wi142")]
+rotation_edit_mode = 1
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.0255488, 0.999674, 0, -0.999674, -0.0255488, 0, 6.12275, 0)
