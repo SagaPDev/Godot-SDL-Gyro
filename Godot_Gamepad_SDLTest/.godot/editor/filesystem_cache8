@@ -1,8 +1,0 @@
-ea4bc82a6ad023ab7ee23ee620429895
-::res://::1708816513
-icon.svg::CompressedTexture2D::4660331183908955229::1708569713::1708746701::1::::<><>::
-node_2d.tscn::PackedScene::3349849642210856437::1708816413::0::1::::<><>::res://test.gd<>uid://g5c5kcxolume::::res://scene.gltf
-scene.gltf::PackedScene::483239931639956996::1708804045::1708804045::1::::<><>::
-test.gd::GDScript::-1::1708816376::0::1::::<>Node3D<>::
-::res://bin/::1708816267
-sdlgyro.gdextension::GDExtension::-1::1708570760::0::1::::<><>::
