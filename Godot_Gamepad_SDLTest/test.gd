@@ -1,6 +1,7 @@
 extends Node3D
 
 var Gyro=SDLGyro.new()
+var orientation=Gyro.gamepadPoling()
 # Called when the node enters the scene tree for the first time.
 func _ready():
   Gyro.sdl_init()
@@ -8,7 +9,7 @@ func _ready():
 
 func _process(delta):
   #Gyro.gamepadPoling()
-  var orientation=Gyro.gamepadPoling()
+  orientation=Gyro.gamepadPoling()
 
   $Sketchfab_Scene.quaternion.w=orientation[0]
   $Sketchfab_Scene.quaternion.z=orientation[1]
