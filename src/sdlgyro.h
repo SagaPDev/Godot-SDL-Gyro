@@ -1,7 +1,6 @@
 #ifndef SDLGYRO_H
 #define SDLGYRO_H
 
-#include "godot_cpp/variant/typed_array.hpp"
 #include <godot_cpp/classes/object.hpp>
 #include <godot_cpp/variant/variant.hpp>
 using namespace godot;
@@ -12,6 +11,8 @@ using namespace godot;
       void sdl_init();
       void controller_init();
       Variant gamepadPoling();
+      void calibrate();
+      void stop_calibrate();
     protected:
       static void _bind_methods();
   };

@@ -36,6 +36,8 @@ void SDLGyro::_bind_methods() {
   ClassDB::bind_method(D_METHOD("sdl_init"),&SDLGyro::sdl_init);
   ClassDB::bind_method(D_METHOD("controller_init"),&SDLGyro::controller_init);
   ClassDB::bind_method(D_METHOD("gamepadPoling"),&SDLGyro::gamepadPoling);
+  ClassDB::bind_method(D_METHOD("calibrate"),&SDLGyro::calibrate);
+  ClassDB::bind_method(D_METHOD("stop_calibrate"),&SDLGyro::stop_calibrate);
 }
 
 void SDLGyro::sdl_init() {
@@ -93,7 +95,12 @@ void SDLGyro::controller_init(){
   }
 }
 
-
+void SDLGyro::calibrate(){
+ gyroSensor.StartContinuousCalibration(); 
+}
+void SDLGyro::stop_calibrate(){
+  gyroSensor.PauseContinuousCalibration();
+}
 Variant SDLGyro::gamepadPoling(){
   TypedArray<float> gyro(3);
   TypedArray<float> accel(3);
