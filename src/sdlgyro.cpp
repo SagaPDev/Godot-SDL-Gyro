@@ -55,39 +55,42 @@ void SDLGyro::sdl_init() {
 }
 
 void SDLGyro::controller_init(){
-  /*controller initialization*/
+  SDL_GameController *test_controller =nullptr;
+  bool test_gyroEnabled;
+  bool test_accelEnabled;
+   /*controller initialization*/
   for (int i=0;i<SDL_NumJoysticks();i++){
+    UtilityFunctions::print(SDL_IsGameController(i),"\n");
+    test_controller = SDL_GameControllerOpen(i);
+    UtilityFunctions::print(SDL_GameControllerNameForIndex(i),"\n");
     if(SDL_IsGameController(i)){
-      UtilityFunctions::print(SDL_IsGameController(i),"\n");
-      controller = SDL_GameControllerOpen(i);
-      UtilityFunctions::print(SDL_GameControllerNameForIndex(i),"\n");
+      /*test gyro*/
+      if (SDL_GameControllerHasSensor(test_controller,SDL_SENSOR_GYRO)){
+        UtilityFunctions::print("Gyro Detected\n");
+        SDL_GameControllerSetSensorEnabled(test_controller,SDL_SENSOR_GYRO,SDL_TRUE);
+        test_gyroEnabled=true;
       }
+      else{ 
+        UtilityFunctions::print("gyro disabled\n");
+        test_gyroEnabled=false;
+      }
+      /*test accelerometer*/
+      if (SDL_GameControllerHasSensor(test_controller,SDL_SENSOR_ACCEL)){
+        UtilityFunctions::print("accelerometer Detected\n");
+        SDL_GameControllerSetSensorEnabled(controller,SDL_SENSOR_ACCEL,SDL_TRUE);
+        test_accelEnabled=true;
+      }
+      else{
+        UtilityFunctions::print("accelerometer not Detected\n");
+        test_accelEnabled=false;
+      } 
     }
-  /*test gyro*/
-  if (SDL_GameControllerHasSensor(controller,SDL_SENSOR_GYRO)){
-    UtilityFunctions::print("Gyro Detected\n");
-    SDL_GameControllerSetSensorEnabled(controller,SDL_SENSOR_GYRO,SDL_TRUE);
+    if (test_accelEnabled && test_gyroEnabled){
+      controller = test_controller;
+      gyroEnabled=true;
+      accelEnabled=true;
+    }
   }
-  else UtilityFunctions::print("Gyro not Detected\n");
-
-  if(SDL_GameControllerIsSensorEnabled(controller, SDL_SENSOR_GYRO)){
-    UtilityFunctions::print("gyro enabled\n");
-    gyroEnabled=true;
-  }
-  else UtilityFunctions::print("gyro disabled\n");
-
-  /*test accelerometer*/
-  if (SDL_GameControllerHasSensor(controller,SDL_SENSOR_ACCEL)){
-    UtilityFunctions::print("accelerometer Detected\n");
-    SDL_GameControllerSetSensorEnabled(controller,SDL_SENSOR_ACCEL,SDL_TRUE);
-  }
-  else UtilityFunctions::print("accelerometer not Detected\n");
-
-      if(SDL_GameControllerIsSensorEnabled(controller, SDL_SENSOR_ACCEL)){
-        UtilityFunctions::print("accelerometer enabled\n");
-        accelEnabled=true;
-      }
-      else UtilityFunctions::print("accelerometer disabled\n");
 }
 
 
