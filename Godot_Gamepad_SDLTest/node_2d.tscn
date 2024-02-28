@@ -47,6 +47,7 @@ shadow_mesh = SubResource("ArrayMesh_ajuty")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_63bns"]
 resource_name = "Scene_-_Root"
 cull_mode = 2
+albedo_color = Color(0.294118, 0.294118, 0.294118, 1)
 roughness = 0.6
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_blk7e"]
@@ -916,185 +917,187 @@ transform = Transform3D(1, 0, 0, 0, 2.22045e-16, 1, 0, -1, 2.22045e-16, 0, 0, 0)
 [node name="GLTF_SceneRootNode" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root"]
 transform = Transform3D(1, 0, 0, 0, 2.22045e-16, -1, 0, 1, 2.22045e-16, 0, 0, 0)
 
-[node name="Top_Shell_0" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Top_Shell" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(0.00011171, 0, 0.240735, 0, 0.240735, 0, -0.240735, 0, 0.00011171, 0, 0, 0)
 
-[node name="Object_4" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Top_Shell_0"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Top_Shell"]
 mesh = SubResource("ArrayMesh_qmt4s")
 skeleton = NodePath("")
 
-[node name="Bottom_Shell_1" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Bottom_Shell" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(6.05058e-06, 0, 0.0130391, 0, 0.0130391, 0, -0.013039, 0, 6.05064e-06, 0, 0, 0)
 
-[node name="Object_6" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Bottom_Shell_1"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Bottom_Shell"]
 mesh = SubResource("ArrayMesh_qktm8")
 skeleton = NodePath("")
 
-[node name="Light_Bar_2" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Light_Bar" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(6.05017e-06, -0.0120418, -0.00500152, 7.14876e-10, -0.00500152, 0.0120418, -0.0130391, -5.58766e-06, -2.32005e-06, 0, 0, 0)
 
-[node name="Object_8" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Light_Bar_2"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Light_Bar"]
 mesh = SubResource("ArrayMesh_uiiaq")
 skeleton = NodePath("")
 
-[node name="Touch_Pad_3" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Touch_Pad" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(1.65739e-05, 0, 0.0357167, 0, 0.00306059, 0, -0.0357167, 0, 1.65739e-05, 0, 0, 0)
 
-[node name="Object_10" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Touch_Pad_3"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Touch_Pad"]
 mesh = SubResource("ArrayMesh_37a81")
 skeleton = NodePath("")
 
-[node name="Right_Stick_4" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Right_Stick" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(2.74988e-05, 0, 0.05926, -0.00279566, 0.028951, 1.29729e-06, -0.0591941, -0.00136732, 2.74682e-05, 0.119078, 0.133166, -0.329874)
 
-[node name="Object_12" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Right_Stick_4"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Right_Stick"]
 mesh = SubResource("ArrayMesh_ve0c3")
 skeleton = NodePath("")
 
-[node name="Right_Ring_5" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Right_Ring" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(2.74988e-05, 0, 0.05926, -0.00279566, 0.028951, 1.29729e-06, -0.0591941, -0.00136732, 2.74682e-05, 0.119078, 0.133166, -0.329874)
 
-[node name="Object_14" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Right_Ring_5"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Right_Ring"]
 mesh = SubResource("ArrayMesh_5dxnw")
 skeleton = NodePath("")
 
-[node name="Right_Cap_6" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Right_Cap" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(2.74988e-05, 0, 0.05926, 0, 0.0289833, 0, -0.05926, 0, 2.74988e-05, 0.119078, 0.133166, -0.329874)
 
-[node name="Object_16" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Right_Cap_6"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Right_Cap"]
 mesh = SubResource("ArrayMesh_2mrr6")
 skeleton = NodePath("")
 
-[node name="Right_Bumper_7" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Right_Bumper" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(6.11468e-06, -0.0130311, -0.000458426, 2.88451e-10, -0.000458426, 0.0130311, -0.0131781, -6.04649e-06, -2.12426e-07, 0, 0, 0)
 
-[node name="Object_18" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Right_Bumper_7"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Right_Bumper"]
+transform = Transform3D(1, 2.91038e-11, 0, 0, 1, 1.04012e-10, 0, -3.62127e-09, 1, 0, 0, 0)
 mesh = SubResource("ArrayMesh_hdo8k")
 skeleton = NodePath("")
 
-[node name="Right_Trigger_8" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Right_Trigger" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(6.0509e-06, 0.00887582, 0.00955191, -1.77533e-10, 0.00955191, -0.00887582, -0.0130391, 4.11875e-06, 4.43274e-06, 0, 0, 0)
 
-[node name="Object_20" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Right_Trigger_8"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Right_Trigger"]
+transform = Transform3D(1, -1.16415e-10, -5.82077e-11, 2.91038e-11, 1, 4.77798e-08, -8.73115e-11, -4.1627e-08, 1, 0, 0, 0)
 mesh = SubResource("ArrayMesh_rc8dt")
 skeleton = NodePath("")
 
-[node name="X_Button_9" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="South_Button" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(3.13447e-05, 0, 0.0675479, 0, 0.0140417, 0, -0.0675479, 0, 3.13447e-05, 0, 0, 0)
 
-[node name="Object_22" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/X_Button_9"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/South_Button"]
 mesh = SubResource("ArrayMesh_of6pn")
 skeleton = NodePath("")
 
-[node name="Square_Button_10" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="East_Button" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(3.13447e-05, 0, 0.0675479, 0, 0.0140417, 0, -0.0675479, 0, 3.13447e-05, 0, 0, 0)
 
-[node name="Object_24" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Square_Button_10"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/East_Button"]
 mesh = SubResource("ArrayMesh_4fcbl")
 skeleton = NodePath("")
 
-[node name="Circle_Button_11" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="West_Button" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(3.13447e-05, 0, 0.0675479, 0, 0.0140417, 0, -0.0675479, 0, 3.13447e-05, 0, 0, 0)
 
-[node name="Object_26" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Circle_Button_11"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/West_Button"]
 mesh = SubResource("ArrayMesh_uvfwy")
 skeleton = NodePath("")
 
-[node name="Triangle_Button_12" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="North_Button" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(3.13447e-05, 0, 0.0675479, 0, 0.0140417, 0, -0.0675479, 0, 3.13447e-05, 0, 0, 0)
 
-[node name="Object_28" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Triangle_Button_12"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/North_Button"]
 mesh = SubResource("ArrayMesh_hue6h")
 skeleton = NodePath("")
 
-[node name="Options_Button_13" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Start_Button" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(6.05064e-06, 0, 0.0130391, 0, 0.0130391, 0, -0.0130391, 0, 6.05064e-06, 0, 0, 0)
 
-[node name="Object_30" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Options_Button_13"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Start_Button"]
 mesh = SubResource("ArrayMesh_yypfx")
 skeleton = NodePath("")
 
-[node name="Start_Button_14" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Select_Button" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(6.05064e-06, 0, 0.0130391, 0, 0.0130391, 0, -0.0130391, 0, 6.05064e-06, 0, 0, 0)
 
-[node name="Object_32" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Start_Button_14"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Select_Button"]
 mesh = SubResource("ArrayMesh_gvrea")
 skeleton = NodePath("")
 
-[node name="Left_Stick_15" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Left_Stick" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(2.74988e-05, 0, 0.05926, 0, 0.0289833, 0, -0.05926, 0, 2.74988e-05, 0.118772, 0.133166, 0.329983)
 
-[node name="Object_34" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Left_Stick_15"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Left_Stick"]
 mesh = SubResource("ArrayMesh_b3h8t")
 skeleton = NodePath("")
 
-[node name="Left_Ring_16" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Left_Ring" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(2.74988e-05, 0, 0.05926, 0, 0.0289833, 0, -0.05926, 0, 2.74988e-05, 0.118772, 0.133166, 0.329983)
 
-[node name="Object_36" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Left_Ring_16"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Left_Ring"]
 mesh = SubResource("ArrayMesh_hydbi")
 skeleton = NodePath("")
 
-[node name="Left_Cap_17" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Left_Cap" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(2.74988e-05, 0, 0.05926, 0, 0.0289833, 0, -0.05926, 0, 2.74988e-05, 0.118772, 0.133166, 0.329983)
 
-[node name="Object_38" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Left_Cap_17"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Left_Cap"]
 mesh = SubResource("ArrayMesh_w2y7q")
 skeleton = NodePath("")
 
-[node name="Left_Bumper_18" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Left_Bumper" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(6.11468e-06, -0.0130311, -0.000458426, 2.88451e-10, -0.000458426, 0.0130311, -0.0131781, -6.04649e-06, -2.12426e-07, 0, 0, 0)
 
-[node name="Object_40" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Left_Bumper_18"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Left_Bumper"]
 mesh = SubResource("ArrayMesh_wlajl")
 skeleton = NodePath("")
 
-[node name="Left_Trigger_19" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Left_Trigger" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(6.0509e-06, 0.00887582, 0.00955191, -1.77533e-10, 0.00955191, -0.00887582, -0.0130391, 4.11875e-06, 4.43274e-06, 0, 0, 0)
 
-[node name="Object_42" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Left_Trigger_19"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Left_Trigger"]
 mesh = SubResource("ArrayMesh_j5qjs")
 skeleton = NodePath("")
 
-[node name="Dpad_Right_20" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Dpad_Right" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(6.05064e-06, 0, 0.0130391, 0, 0.0130391, 0, -0.0130391, 0, 6.05064e-06, 0, 0, 0)
 
-[node name="Object_44" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Dpad_Right_20"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Dpad_Right"]
 mesh = SubResource("ArrayMesh_iyait")
 skeleton = NodePath("")
 
-[node name="Dpad_Up_21" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Dpad_Up" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(-0.0130391, 0, 6.05164e-06, 0, 0.0130391, 0, -6.05164e-06, 0, -0.0130391, 0, 0, 0)
 
-[node name="Object_46" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Dpad_Up_21"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Dpad_Up"]
 mesh = SubResource("ArrayMesh_65uia")
 skeleton = NodePath("")
 
-[node name="Dpad_Down_22" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Dpad_Down" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(-0.0130391, 0, 6.05164e-06, 0, 0.0130391, 0, -6.05164e-06, 0, -0.0130391, 0, 0, 0)
 
-[node name="Object_48" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Dpad_Down_22"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Dpad_Down"]
 mesh = SubResource("ArrayMesh_o6o57")
 skeleton = NodePath("")
 
-[node name="Dpad_Left_23" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Dpad_Left" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(6.05064e-06, 0, 0.0130391, 0, 0.0130391, 0, -0.0130391, 0, 6.05064e-06, 0, 0, 0)
 
-[node name="Object_50" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Dpad_Left_23"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Dpad_Left"]
 mesh = SubResource("ArrayMesh_1j0mc")
 skeleton = NodePath("")
 
-[node name="Home_Button_24" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Home_Button" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(2.3848e-05, 0.0157954, 0.0489048, -1.50773e-10, 0.0489048, -0.0157954, -0.0513924, 7.32954e-06, 2.26938e-05, 0, 0, 0)
 
-[node name="Object_52" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Home_Button_24"]
+[node name="Mesh" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Home_Button"]
 mesh = SubResource("ArrayMesh_y4yy4")
 skeleton = NodePath("")
 
-[node name="Touch_Point_25" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
+[node name="Touch_Point" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode"]
 transform = Transform3D(0.05, 0, 0, 0, 0.0395407, 0, 0, 0, 0.05, 0, 0, 0)
 
-[node name="Object_54" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Touch_Point_25"]
+[node name="Object_54" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Touch_Point"]
 mesh = SubResource("ArrayMesh_pn6tx")
 skeleton = NodePath("")
 
