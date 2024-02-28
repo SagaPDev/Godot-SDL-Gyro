@@ -10,17 +10,30 @@ func _ready():
   Gyro.sdl_init()
   Gyro.controller_init()
 
-func _process(delta):
-  #Gyro.gamepadPoling()
+func _process(_delta):
+  var rsdirection_vector=Vector3.ZERO
+  var lsdirection_vector=Vector3.ZERO
+  rsdirection_vector= Input.get_vector("RSTICK_LEFT","RSTICK_RIGHT","RSTICK_UP","RSTICK_DOWN")
+  lsdirection_vector= Input.get_vector("LSTICK_LEFT","LSTICK_RIGHT","LSTICK_UP","LSTICK_DOWN")
+  if lsdirection_vector!=Vector2.ZERO:
+      model.get_node("Left_Stick/Ring/Mesh").set_surface_override_material(0,highlight_material)
+  elif lsdirection_vector==Vector2.ZERO:
+      model.get_node("Left_Stick/Ring/Mesh").set_surface_override_material(0,null)
+
+
+  if rsdirection_vector!=Vector2.ZERO:
+      model.get_node("Right_Stick/Ring/Mesh").set_surface_override_material(0,highlight_material)
+  elif rsdirection_vector==Vector2.ZERO:
+      model.get_node("Right_Stick/Ring/Mesh").set_surface_override_material(0,null)
+
+  model.get_node("Right_Stick").rotation_degrees.x=-rsdirection_vector.x*30
+  model.get_node("Right_Stick").rotation_degrees.z=-rsdirection_vector.y*30
+
+  model.get_node("Left_Stick").rotation_degrees.x=-lsdirection_vector.x*30
+  model.get_node("Left_Stick").rotation_degrees.z=-lsdirection_vector.y*30
   orientation=Gyro.gamepadPoling()
   $Sketchfab_Scene.quaternion=Quaternion(orientation[3],orientation[2],-orientation[1],orientation[0])
-  #$Sketchfab_Scene.quaternion.w=orientation[0]
-  #$Sketchfab_Scene.quaternion.z=orientation[1]
-  #$Sketchfab_Scene.quaternion.y=orientation[2]
-  #$Sketchfab_Scene.quaternion.x=-orientation[3]
-  #$MeshInstance3D.quaternion.x=orientation[0]
-  #$MeshInstance3D.quaternion.y=orientation[1]
-  #$MeshInstance3D.quaternion.z=orientation[2]
+
 func _unhandled_input(event):
   if event.is_action_pressed("calibration"):
     if actCalibration==false:
@@ -103,20 +116,12 @@ func _unhandled_input(event):
       model.get_node("Select_Button/Mesh").set_surface_override_material(0,null)
 
   if event.is_action_pressed("R_STICK"):
-      model.get_node("Right_Cap/Mesh").set_surface_override_material(0,highlight_material)
+      model.get_node("Right_Stick/Cap/Mesh").set_surface_override_material(0,highlight_material)
   elif event.is_action_released("R_STICK"):
-      model.get_node("Right_Cap/Mesh").set_surface_override_material(0,null)
+      model.get_node("Right_Stick/Cap/Mesh").set_surface_override_material(0,null)
 
 
   if event.is_action_pressed("L_STICK"):
-      model.get_node("Left_Cap/Mesh").set_surface_override_material(0,highlight_material)
+      model.get_node("Left_Stick/Cap/Mesh").set_surface_override_material(0,highlight_material)
   elif event.is_action_released("L_STICK"):
-      model.get_node("Left_Cap/Mesh").set_surface_override_material(0,null)
-    
-
-  if event.is_action_pressed("L_STICK_M"):
-      model.get_node("Left_Ring/Mesh").set_surface_override_material(0,highlight_material)
-  elif event.is_action_released("L_STICK_M"):
-      model.get_node("Left_Ring/Mesh").set_surface_override_material(0,null)
-
-
+      model.get_node("Left_Stick/Cap/Mesh").set_surface_override_material(0,null)
