@@ -108,18 +108,10 @@ Variant SDLGyro::gamepadPoling(){
   //IMU gyro
   if (gyroEnabled==true){
     SDL_GameControllerGetSensorData(controller,SDL_SENSOR_GYRO, &rawGyro[0], 3);
-    UtilityFunctions::print("gyro  X= ",rawGyro[0]*toDegPerSec," Y= ",rawGyro[1]*toDegPerSec," Z= ",rawGyro[2]*toDegPerSec,"\n");
-    /*for (int i = 0; i < 2; i++) {
-      gyro[i] = rawGyro[i]*toDegPerSec;
-    }*/
   }
   //IMU accelerometer//
   if (accelEnabled==true){
     SDL_GameControllerGetSensorData(controller,SDL_SENSOR_ACCEL, &rawAccel[0], 3);
-    UtilityFunctions::print("accel X= ",rawAccel[0]*toGs," Y= ",rawAccel[1]*toGs," Z= ",rawAccel[2]*toGs,"\n");
-    /*for (int i = 0; i < 2; i++) {
-      accel[i] = rawAccel[i]*toGs;
-    }*/
   }
 
   //Sensor Fussion//
@@ -132,22 +124,10 @@ Variant SDLGyro::gamepadPoling(){
     oldTime=std::chrono::steady_clock::now();
 
     gyroSensor.GetOrientation(rawOrientation[0], rawOrientation[1], rawOrientation[2], rawOrientation[3]);
-    UtilityFunctions::print("orien X= ",rawOrientation[1]," Y= ",rawOrientation[2]," Z= ",rawOrientation[3]," W= ",rawOrientation[0],"\n");
-    UtilityFunctions::print(deltaTime,"\n");
-
     orientation.push_back(rawOrientation[0]); /*w*/
     orientation.push_back(rawOrientation[1]);/*x*/
     orientation.push_back(rawOrientation[2]);/*y*/
     orientation.push_back(rawOrientation[3]);/*z*/
-/*
-    orientation.push_back(0.0);
-    orientation.push_back(0.0);
-    orientation.push_back(0.0);
-    orientation.push_back(0.0);
-*/
-    /*for (int i = 0; i < 3; i++) {
-      orientation[i] = rawOrientation[i];
-    }*/
   }
 
   //event loop//
