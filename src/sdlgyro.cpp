@@ -45,7 +45,7 @@ void SDLGyro::sdl_init() {
   newTime=std::chrono::steady_clock::now();
   oldTime=newTime;
 
-  /*SDL initializATION*/
+  //SDL initializATION
   SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
   if((SDL_Init(SDL_INIT_GAMECONTROLLER))<0){
     UtilityFunctions::print("could not initialize SDL \n");
@@ -60,13 +60,13 @@ void SDLGyro::controller_init(){
   SDL_GameController *test_controller =nullptr;
   bool test_gyroEnabled;
   bool test_accelEnabled;
-   /*controller initialization*/
+   //controller initialization
   for (int i=0;i<SDL_NumJoysticks();i++){
     UtilityFunctions::print(SDL_IsGameController(i),"\n");
     test_controller = SDL_GameControllerOpen(i);
     UtilityFunctions::print(SDL_GameControllerNameForIndex(i),"\n");
     if(SDL_IsGameController(i)){
-      /*test gyro*/
+      //test gyro
       if (SDL_GameControllerHasSensor(test_controller,SDL_SENSOR_GYRO)){
         UtilityFunctions::print("Gyro Detected\n");
         SDL_GameControllerSetSensorEnabled(test_controller,SDL_SENSOR_GYRO,SDL_TRUE);
@@ -76,7 +76,7 @@ void SDLGyro::controller_init(){
         UtilityFunctions::print("gyro disabled\n");
         test_gyroEnabled=false;
       }
-      /*test accelerometer*/
+      //test accelerometer
       if (SDL_GameControllerHasSensor(test_controller,SDL_SENSOR_ACCEL)){
         UtilityFunctions::print("accelerometer Detected\n");
         SDL_GameControllerSetSensorEnabled(controller,SDL_SENSOR_ACCEL,SDL_TRUE);
@@ -105,7 +105,7 @@ Variant SDLGyro::gamepadPoling(){
   TypedArray<float> gyro;
   TypedArray<float> accel;
   TypedArray<float> orientation;
-  /*IMU gyro*/
+  //IMU gyro
   if (gyroEnabled==true){
     SDL_GameControllerGetSensorData(controller,SDL_SENSOR_GYRO, &rawGyro[0], 3);
     UtilityFunctions::print("gyro  X= ",rawGyro[0]*toDegPerSec," Y= ",rawGyro[1]*toDegPerSec," Z= ",rawGyro[2]*toDegPerSec,"\n");
@@ -113,7 +113,7 @@ Variant SDLGyro::gamepadPoling(){
       gyro[i] = rawGyro[i]*toDegPerSec;
     }*/
   }
-  /*IMU accelerometer*/
+  //IMU accelerometer//
   if (accelEnabled==true){
     SDL_GameControllerGetSensorData(controller,SDL_SENSOR_ACCEL, &rawAccel[0], 3);
     UtilityFunctions::print("accel X= ",rawAccel[0]*toGs," Y= ",rawAccel[1]*toGs," Z= ",rawAccel[2]*toGs,"\n");
@@ -122,7 +122,7 @@ Variant SDLGyro::gamepadPoling(){
     }*/
   }
 
-  /*Sensor Fussion*/
+  //Sensor Fussion//
   if (gyroEnabled && accelEnabled){
     if (oldTime!=newTime)
       newTime=std::chrono::steady_clock::now();
@@ -150,7 +150,7 @@ Variant SDLGyro::gamepadPoling(){
     }*/
   }
 
-  /*event loop*/
+  //event loop//
   while(SDL_PollEvent(&event)){
     switch (event.type) {
       case SDL_CONTROLLERBUTTONDOWN:
@@ -159,11 +159,11 @@ Variant SDLGyro::gamepadPoling(){
       case SDL_CONTROLLERAXISMOTION:
         UtilityFunctions::print(SDL_GameControllerGetStringForAxis(SDL_GameControllerAxis(event.caxis.axis))," ",event.caxis.value,"\n");
         break;
-      /*hot pluging*/
+      //hot pluging//
       case SDL_CONTROLLERDEVICEADDED:
         if (!controller){
           UtilityFunctions::print("controller conected\n");
-          /*SDLGyro::controller_init();*/
+          //SDLGyro::controller_init();//
         }
         break;
       case SDL_CONTROLLERDEVICEREMOVED:
@@ -173,7 +173,7 @@ Variant SDLGyro::gamepadPoling(){
         gyroEnabled=false;
         accelEnabled=false;
         break;
-    /*-------------------*/
+    //-------------------//
       case SDL_QUIT:
         UtilityFunctions::print("Quiting SDL.\n");
         isRunning=false;
