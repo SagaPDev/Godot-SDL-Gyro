@@ -102,9 +102,9 @@ void SDLGyro::stop_calibrate(){
   gyroSensor.PauseContinuousCalibration();
 }
 Variant SDLGyro::gamepadPoling(){
-  TypedArray<float> gyro(3);
-  TypedArray<float> accel(3);
-  TypedArray<float> orientation(4);
+  TypedArray<float> gyro;
+  TypedArray<float> accel;
+  TypedArray<float> orientation;
   /*IMU gyro*/
   if (gyroEnabled==true){
     SDL_GameControllerGetSensorData(controller,SDL_SENSOR_GYRO, &rawGyro[0], 3);
