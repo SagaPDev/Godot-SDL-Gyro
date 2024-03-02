@@ -122,7 +122,7 @@ Variant SDLGyro::gamepadPoling(){
     oldTime=std::chrono::steady_clock::now();
 
     gyroSensor.GetOrientation(rawOrientation[0], rawOrientation[1], rawOrientation[2], rawOrientation[3]);
-    orientation.push_back(rawOrientation[0]); /*w*/
+    orientation.push_back(rawOrientation[0]);/*w*/
     orientation.push_back(rawOrientation[1]);/*x*/
     orientation.push_back(rawOrientation[2]);/*y*/
     orientation.push_back(rawOrientation[3]);/*z*/
@@ -131,12 +131,6 @@ Variant SDLGyro::gamepadPoling(){
   //event loop//
   while(SDL_PollEvent(&event)){
     switch (event.type) {
-      case SDL_CONTROLLERBUTTONDOWN:
-        UtilityFunctions::print(SDL_GameControllerGetStringForButton(SDL_GameControllerButton(event.cbutton.button)),"\n"); 
-        break;
-      case SDL_CONTROLLERAXISMOTION:
-        UtilityFunctions::print(SDL_GameControllerGetStringForAxis(SDL_GameControllerAxis(event.caxis.axis))," ",event.caxis.value,"\n");
-        break;
       //hot pluging//
       case SDL_CONTROLLERDEVICEADDED:
         if (!controller){
