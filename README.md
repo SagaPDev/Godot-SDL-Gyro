@@ -6,3 +6,5 @@ This program workds on Linux only, for a windows equivalent try [3d-controller-o
 ## Usage
 [Download](https://github.com/SagaPDev/Godot-SDL-Gamepad-Test/releases/latest/download/Godot_SDL_gamepad_test.zip) and extract both files in the same folder and execute, 
 Make sure your gamepad is conected before runing, if drift is present place the gamepad in an even surface and press 'C' to start the calibration process, pres 'C' again to end calibrarion
+## Aditional Credits
+Source of the [3Dmodel](https://sketchfab.com/3d-models/ps4-controller-from-3d-controller-overlay-d8569dc4e3af46a4b137f2926423f195) by [larf](https://sketchfab.com/larf)
