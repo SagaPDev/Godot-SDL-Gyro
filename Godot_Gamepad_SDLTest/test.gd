@@ -9,7 +9,6 @@ var highlight_material = preload("res://button_hightlight.tres")  # Load the mat
 func _ready():
   Gyro.sdl_init()
   Gyro.controller_init()
-
 func _process(_delta):
   var rsdirection_vector=Vector3.ZERO
   var lsdirection_vector=Vector3.ZERO
@@ -37,10 +36,12 @@ func _process(_delta):
 func _unhandled_input(event):
   if event.is_action_pressed("calibration"):
     if actCalibration==false:
+      $Label.visible=true
       Gyro.calibrate()
       actCalibration=true
     elif actCalibration==true:
       Gyro.stop_calibrate()
+      $Label.visible=false
       actCalibration=false
 
   if event.is_action_pressed("B_SOUTH"):

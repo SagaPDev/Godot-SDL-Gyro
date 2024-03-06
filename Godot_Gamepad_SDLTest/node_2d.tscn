@@ -1118,3 +1118,24 @@ transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, 
 modulate = Color(0.803922, 0.960784, 1, 1)
 pixel_size = 6.5741
 texture = ExtResource("2_c47re")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -104.5
+offset_top = -49.0
+offset_right = 104.5
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.847059, 0.847059, 0.847059, 1)
+theme_override_constants/outline_size = 3
+text = "Calibrating...
+keep controller on a even surface
+Press 'c' to stop calibration"
+horizontal_alignment = 1
