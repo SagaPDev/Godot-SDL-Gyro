@@ -15,7 +15,7 @@ using namespace godot;
 SDL_Event event;  
 SDL_GameController *controller =nullptr;
 
-bool isRunning=true;
+bool pollingEnabled=true;
 bool gyroEnabled=false;
 bool accelEnabled=false;
 float deltaTime=0.0;
@@ -53,6 +53,16 @@ void SDLGyro::sdl_init() {
 
 }
 
+//CALIBRATION
+void SDLGyro::calibrate(){
+  gyroSensor.Reset();
+  pollingEnabled=false;
+  gyroSensor.StartContinuousCalibration(); 
+}
+void SDLGyro::stop_calibrate(){
+  gyroSensor.PauseContinuousCalibration();
+  pollingEnabled=true;
+}
 void SDLGyro::controller_init(){
   SDL_GameController *test_controller =nullptr;
   bool test_gyroEnabled;
@@ -109,10 +119,6 @@ Variant SDLGyro::gamepadPoling(){
     oldTime=std::chrono::steady_clock::now();
 
     gyroSensor.GetOrientation(rawOrientation[0], rawOrientation[1], rawOrientation[2], rawOrientation[3]);
-    orientation.push_back(rawOrientation[0]);/*w*/
-    orientation.push_back(rawOrientation[1]);/*x*/
-    orientation.push_back(rawOrientation[2]);/*y*/
-    orientation.push_back(rawOrientation[3]);/*z*/
   }
 
   //event loop//
@@ -135,10 +141,22 @@ Variant SDLGyro::gamepadPoling(){
     //-------------------//
       case SDL_QUIT:
         UtilityFunctions::print("Quiting SDL.\n");
-        isRunning=false;
       default:
         break;
     }
   }
-return orientation;
+  if (pollingEnabled==true){
+    orientation.push_back(rawOrientation[0]);/*w*/
+    orientation.push_back(rawOrientation[1]);/*x*/
+    orientation.push_back(rawOrientation[2]);/*y*/
+    orientation.push_back(rawOrientation[3]);/*z*/
+    return orientation;
+    }
+  else{
+    orientation.push_back(1.0);/*w*/
+    orientation.push_back(0.0);/*x*/
+    orientation.push_back(0.0);/*y*/
+    orientation.push_back(0.0);/*z*/
+    return orientation;
+  }
 }
