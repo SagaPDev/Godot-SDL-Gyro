@@ -13,6 +13,8 @@ using namespace godot;
       Variant gamepadPoling();
       void calibrate();
       void stop_calibrate();
+      Variant getPlayer_space();
+      Variant getWorld_space();
     protected:
       static void _bind_methods();
   };
