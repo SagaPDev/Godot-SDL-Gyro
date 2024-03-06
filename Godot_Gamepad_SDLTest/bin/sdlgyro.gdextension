@@ -15,4 +15,3 @@ windows.release.x86_64 = "res://bin/libsdlgyro.windows.template_release.x86_64.d
 
 linux.debug.x86_64 = "res://bin/libsdlgyro.linux.template_debug.x86_64.so"
 linux.release.x86_64 = "res://bin/libsdlgyro.linux.template_release.x86_64.so"
-
