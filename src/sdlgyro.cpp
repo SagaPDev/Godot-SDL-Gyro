@@ -41,12 +41,9 @@ void SDLGyro::_bind_methods() {
 }
 
 void SDLGyro::sdl_init() {
-
   newTime=std::chrono::steady_clock::now();
   oldTime=newTime;
-
   //SDL initializATION
-  SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
   if((SDL_Init(SDL_INIT_GAMECONTROLLER))<0){
     UtilityFunctions::print("could not initialize SDL \n");
   }
@@ -95,25 +92,15 @@ void SDLGyro::controller_init(){
   }
 }
 
-void SDLGyro::calibrate(){
- gyroSensor.StartContinuousCalibration(); 
-}
-void SDLGyro::stop_calibrate(){
-  gyroSensor.PauseContinuousCalibration();
-}
+
 Variant SDLGyro::gamepadPoling(){
   TypedArray<float> orientation;
   //IMU gyro
-  if (gyroEnabled==true){
-    SDL_GameControllerGetSensorData(controller,SDL_SENSOR_GYRO, &rawGyro[0], 3);
-  }
-  //IMU accelerometer//
-  if (accelEnabled==true){
-    SDL_GameControllerGetSensorData(controller,SDL_SENSOR_ACCEL, &rawAccel[0], 3);
-  }
-
-  //Sensor Fussion//
   if (gyroEnabled && accelEnabled){
+    SDL_GameControllerGetSensorData(controller,SDL_SENSOR_GYRO, &rawGyro[0], 3);
+  //IMU accelerometer//
+    SDL_GameControllerGetSensorData(controller,SDL_SENSOR_ACCEL, &rawAccel[0], 3);
+  //Sensor Fussion//
     if (oldTime!=newTime)
       newTime=std::chrono::steady_clock::now();
     deltaTime=((float)std::chrono::duration_cast<std::chrono::microseconds>(newTime-oldTime).count()) / 1000000.0f;
