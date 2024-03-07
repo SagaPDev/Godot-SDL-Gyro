@@ -28,7 +28,8 @@ std::array<float, 2> rawPlaySpace;
 std::array<float, 2> rawWorldSpace;
 static constexpr float toDegPerSec = float(180. / M_PI);
 static constexpr float toGs = 1.f / 9.8f;
-
+const float sideReductionThreshold = 0.125f;
+const float yawRelaxFactor = 1.41f;
 std::chrono::steady_clock::time_point oldTime;
 std::chrono::steady_clock::time_point newTime;
 
@@ -71,16 +72,16 @@ void SDLGyro::stop_calibrate(){
 //Convert To 2D
 Variant SDLGyro::getPlayer_space(){
   TypedArray<float> playerSpace;
-  gyroSensor.GetWorldSpaceGyro(rawPlaySpace[0],rawPlaySpace[1]);
+  gyroSensor.GetWorldSpaceGyro(rawPlaySpace[0],rawPlaySpace[1],sideReductionThreshold);
   playerSpace.push_back(rawPlaySpace[0]);
   playerSpace.push_back(rawPlaySpace[1]);
   return playerSpace;
 }
 Variant SDLGyro::getWorld_space(){
   TypedArray<float> worldSpace;
-  gyroSensor.GetPlayerSpaceGyro(rawWorldSpace[0],rawWorldSpace[1]);
+  gyroSensor.GetPlayerSpaceGyro(rawWorldSpace[0],rawWorldSpace[1],yawRelaxFactor);
   worldSpace.push_back(rawWorldSpace[0]);
-  worldSpace.push_back(rawWorldSpace[0]);
+  worldSpace.push_back(rawWorldSpace[1]);
   return worldSpace;
 }
 
