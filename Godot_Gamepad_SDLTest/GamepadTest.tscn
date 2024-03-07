@@ -1,7 +1,7 @@
 [gd_scene load_steps=59 format=3 uid="uid://bnyxsfryy1ljh"]
 
-[ext_resource type="Script" path="res://test.gd" id="1_n5qyu"]
-[ext_resource type="Texture2D" uid="uid://b7nq8du63v6ij" path="res://icon.svg" id="2_c47re"]
+[ext_resource type="Script" path="res://test.gd" id="1_dybe0"]
+[ext_resource type="Texture2D" uid="uid://b7nq8du63v6ij" path="res://icon.svg" id="2_s3whq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b4nas"]
 
@@ -894,9 +894,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_tf0g8")
 
-[node name="Node3D" type="Node3D"]
+[node name="GamepadTest" type="Node3D"]
 rotation_edit_mode = 1
-script = ExtResource("1_n5qyu")
+script = ExtResource("1_dybe0")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 rotation_edit_mode = 1
@@ -1117,7 +1117,7 @@ transform = Transform3D(-0.999385, -0.00089565, 0.035045, -0.0350565, 0.0255331,
 transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 0, -2.50191, 0)
 modulate = Color(0.803922, 0.960784, 1, 1)
 pixel_size = 6.5741
-texture = ExtResource("2_c47re")
+texture = ExtResource("2_s3whq")
 
 [node name="Label" type="Label" parent="."]
 visible = false
