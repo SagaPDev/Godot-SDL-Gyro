@@ -49,10 +49,10 @@ void SDLGyro::sdl_init() {
   oldTime=newTime;
   //SDL initializATION
   if((SDL_Init(SDL_INIT_GAMECONTROLLER))<0){
-    UtilityFunctions::print("could not initialize SDL \n");
+    //UtilityFunctions::print("could not initialize SDL \n");
   }
   else{
-    UtilityFunctions::print("SDL initialized!!!!!!!!!!! \n");
+    //UtilityFunctions::print("SDL initialized!!!!!!!!!!! \n");
   }
 
 }
@@ -90,28 +90,28 @@ void SDLGyro::controller_init(){
   bool test_accelEnabled;
    //controller initialization
   for (int i=0;i<SDL_NumJoysticks();i++){
-    UtilityFunctions::print(SDL_IsGameController(i),"\n");
+    //UtilityFunctions::print(SDL_IsGameController(i),"\n");
     test_controller = SDL_GameControllerOpen(i);
-    UtilityFunctions::print(SDL_GameControllerNameForIndex(i),"\n");
+    //UtilityFunctions::print(SDL_GameControllerNameForIndex(i),"\n");
     if(SDL_IsGameController(i)){
       //test gyro
       if (SDL_GameControllerHasSensor(test_controller,SDL_SENSOR_GYRO)){
-        UtilityFunctions::print("Gyro Detected\n");
+        //UtilityFunctions::print("Gyro Detected\n");
         SDL_GameControllerSetSensorEnabled(test_controller,SDL_SENSOR_GYRO,SDL_TRUE);
         test_gyroEnabled=true;
       }
       else{ 
-        UtilityFunctions::print("gyro disabled\n");
+        //UtilityFunctions::print("gyro disabled\n");
         test_gyroEnabled=false;
       }
       //test accelerometer
       if (SDL_GameControllerHasSensor(test_controller,SDL_SENSOR_ACCEL)){
-        UtilityFunctions::print("accelerometer Detected\n");
+        //UtilityFunctions::print("accelerometer Detected\n");
         SDL_GameControllerSetSensorEnabled(controller,SDL_SENSOR_ACCEL,SDL_TRUE);
         test_accelEnabled=true;
       }
       else{
-        UtilityFunctions::print("accelerometer not Detected\n");
+        //UtilityFunctions::print("accelerometer not Detected\n");
         test_accelEnabled=false;
       } 
     }
@@ -148,20 +148,20 @@ Variant SDLGyro::gamepadPoling(){
       //hot pluging//
       case SDL_CONTROLLERDEVICEADDED:
         if (!controller){
-          UtilityFunctions::print("controller conected\n");
+          //UtilityFunctions::print("controller conected\n");
           //SDLGyro::controller_init();//
         }
         break;
       case SDL_CONTROLLERDEVICEREMOVED:
         SDL_GameControllerClose(controller);
         controller=nullptr;
-        UtilityFunctions::print("controller removed\n");
+        //UtilityFunctions::print("controller removed\n");
         gyroEnabled=false;
         accelEnabled=false;
         break;
     //-------------------//
       case SDL_QUIT:
-        UtilityFunctions::print("Quiting SDL.\n");
+        //UtilityFunctions::print("Quiting SDL.\n");
       default:
         break;
     }
