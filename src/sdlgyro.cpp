@@ -26,6 +26,9 @@ std::array<float, 4> rawOrientation;
 
 std::array<float, 2> rawPlaySpace;
 std::array<float, 2> rawWorldSpace;
+
+std::array<float, 3> rawGravity;
+
 static constexpr float toDegPerSec = float(180. / M_PI);
 static constexpr float toGs = 1.f / 9.8f;
 const float sideReductionThreshold = 0.125f;
@@ -43,6 +46,7 @@ void SDLGyro::_bind_methods() {
   ClassDB::bind_method(D_METHOD("stop_calibrate"),&SDLGyro::stop_calibrate);
   ClassDB::bind_method(D_METHOD("getPlayer_space"),&SDLGyro::getPlayer_space);
   ClassDB::bind_method(D_METHOD("getWorld_space"),&SDLGyro::getPlayer_space);
+  ClassDB::bind_method(D_METHOD("getGravity"),&SDLGyro::getGravity);
 }
 
 void SDLGyro::sdl_init() {
@@ -84,7 +88,14 @@ Variant SDLGyro::getWorld_space(){
   worldSpace.push_back(rawWorldSpace[1]);
   return worldSpace;
 }
-
+Variant SDLGyro::getGravity(){
+  TypedArray<float> gravity;
+  gyroSensor.GetGravity(rawGravity[0],rawGravity[1], rawGravity[3]);
+  gravity.push_back(rawGravity[0]);
+  gravity.push_back(rawGravity[2]);
+  gravity.push_back(rawGravity[3]);
+  return gravity;
+}
 void SDLGyro::controller_init(){
   SDL_GameController *test_controller =nullptr;
   bool test_gyroEnabled;
