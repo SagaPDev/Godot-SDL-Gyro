@@ -8,3 +8,4 @@ compile_commands.json
 *.a
 *.o
 Godot_Gamepad_SDLTest/.godot/
+libs/mingw_dev_lib/*
