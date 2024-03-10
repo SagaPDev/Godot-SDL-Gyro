@@ -10,11 +10,21 @@ using namespace godot;
     public:
       void sdl_init();
       void controller_init();
+
       Variant gamepadPoling();
+
       void calibrate();
       void stop_calibrate();
-      Variant getPlayer_space();
-      Variant getWorld_space();
+
+      Variant getPlayer_space();//not working
+      Variant getWorld_space();//not working
+
+      Variant getGravity();
+  
+      Variant getCalibratedGyro();
+
+      Variant getProcessedAcceleration();
+
     protected:
       static void _bind_methods();
   };

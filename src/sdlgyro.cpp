@@ -28,6 +28,9 @@ std::array<float, 2> rawPlaySpace;
 std::array<float, 2> rawWorldSpace;
 
 std::array<float, 3> rawGravity;
+std::array<float, 3> rawCalibratedGyro;
+
+std::array<float, 3> rawProcessedAcc;
 
 static constexpr float toDegPerSec = float(180. / M_PI);
 static constexpr float toGs = 1.f / 9.8f;
@@ -47,6 +50,8 @@ void SDLGyro::_bind_methods() {
   ClassDB::bind_method(D_METHOD("getPlayer_space"),&SDLGyro::getPlayer_space);
   ClassDB::bind_method(D_METHOD("getWorld_space"),&SDLGyro::getPlayer_space);
   ClassDB::bind_method(D_METHOD("getGravity"),&SDLGyro::getGravity);
+  ClassDB::bind_method(D_METHOD("getCalibratedGyro"),&SDLGyro::getCalibratedGyro);
+  ClassDB::bind_method(D_METHOD("getProcessedAcceleration"),&SDLGyro::getGravity);
 }
 
 void SDLGyro::sdl_init() {
@@ -96,6 +101,25 @@ Variant SDLGyro::getGravity(){
   gravity.push_back(rawGravity[3]);
   return gravity;
 }
+
+Variant SDLGyro::getCalibratedGyro(){
+  TypedArray<float> calibratedgyro;
+  gyroSensor.GetCalibratedGyro(rawCalibratedGyro[0],rawCalibratedGyro[1], rawCalibratedGyro[3]);
+  calibratedgyro.push_back(rawCalibratedGyro[0]);
+  calibratedgyro.push_back(rawCalibratedGyro[2]);
+  calibratedgyro.push_back(rawCalibratedGyro[3]);
+  return calibratedgyro;
+}
+Variant SDLGyro::getProcessedAcceleration(){
+  TypedArray<float> processedAcc;
+  gyroSensor.GetCalibratedGyro(rawProcessedAcc[0],rawProcessedAcc[1], rawProcessedAcc[3]);
+  processedAcc.push_back(rawProcessedAcc[0]);
+  processedAcc.push_back(rawProcessedAcc[2]);
+  processedAcc.push_back(rawProcessedAcc[3]);
+  return processedAcc;
+}
+
+
 void SDLGyro::controller_init(){
   SDL_GameController *test_controller =nullptr;
   bool test_gyroEnabled;
