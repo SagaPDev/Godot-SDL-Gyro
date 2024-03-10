@@ -13,5 +13,5 @@ windows.release.x86_32 = "res://bin/sdlgyro.windows.template_release.x86_32.dll"
 windows.debug.x86_64 = "res://bin/sdlgyro.windows.template_debug.x86_64.dll"
 windows.release.x86_64 = "res://bin/sdlgyro.windows.template_release.x86_64.dll"
 
-linux.debug.x86_64 = "res://bin/libsdlgyro.linux.template_debug.x86_64.so"
-linux.release.x86_64 = "res://bin/libsdlgyro.linux.template_release.x86_64.so"
+linux.debug.x86_64 = "res://addons/godot-sdl-gyro/libsdlgyro.linux.template_debug.x86_64.so"
+linux.release.x86_64 = "res://addons/godot-sdl-gyro/libsdlgyro.linux.template_release.x86_64.so"
