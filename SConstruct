@@ -52,14 +52,14 @@ elif env['CC'] == 'cl':
 
 if env["platform"] == "macos":
     library = env.SharedLibrary(
-        "Godot_Gamepad_SDLTest/bin/sdlgyro.{}.{}.framework/sdlgyro.{}.{}".format(
+        "Godot_Gamepad_SDLTest/addons/godot-sdl-gyro/sdlgyro.{}.{}.framework/sdlgyro.{}.{}".format(
             env["platform"], env["target"], env["platform"], env["target"]
         ),
         source=sources,
     )
 else:
     library = env.SharedLibrary(
-        "Godot_Gamepad_SDLTest/bin/sdlgyro{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
+        "Godot_Gamepad_SDLTest/addons/godot-sdl-gyro/sdlgyro{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
         source=sources,
     )
 
