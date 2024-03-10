@@ -15,9 +15,8 @@ env.Append(CPPPATH=["src/"],LIBS='SDL2')
 sources = Glob("src/*.cpp")
 
 if env["platform"] == "windows" and (env['CC'] == 'gcc' or env['CXX'] == 'g++'):
-
-    env.Append(CPPPATH=['C:\\mingw_dev_lib\\include\\SDL2'])
-    env.Append(LIBPATH=['C:\\mingw_dev_lib\\lib'])
+    env.Append(CPPPATH=['libs/mingw_dev_lib/include'])
+    env.Append(LIBPATH=['libs/mingw_dev_lib/lib'])
 
     env.Append(LINKFLAGS=["-Wl,--dynamicbase","-Wl,--nxcompat"])
     env.Append(CXXFLAGS =["-mwindows"])
