@@ -48,10 +48,10 @@ void SDLGyro::_bind_methods() {
   ClassDB::bind_method(D_METHOD("calibrate"),&SDLGyro::calibrate);
   ClassDB::bind_method(D_METHOD("stop_calibrate"),&SDLGyro::stop_calibrate);
   ClassDB::bind_method(D_METHOD("getPlayer_space"),&SDLGyro::getPlayer_space);
-  ClassDB::bind_method(D_METHOD("getWorld_space"),&SDLGyro::getPlayer_space);
+  ClassDB::bind_method(D_METHOD("getWorld_space"),&SDLGyro::getWorld_space);
   ClassDB::bind_method(D_METHOD("getGravity"),&SDLGyro::getGravity);
   ClassDB::bind_method(D_METHOD("getCalibratedGyro"),&SDLGyro::getCalibratedGyro);
-  ClassDB::bind_method(D_METHOD("getProcessedAcceleration"),&SDLGyro::getGravity);
+  ClassDB::bind_method(D_METHOD("getProcessedAcceleration"),&SDLGyro::getProcessedAcceleration);
 }
 
 void SDLGyro::sdl_init() {
@@ -95,27 +95,27 @@ Variant SDLGyro::getWorld_space(){
 }
 Variant SDLGyro::getGravity(){
   TypedArray<float> gravity;
-  gyroSensor.GetGravity(rawGravity[0],rawGravity[1], rawGravity[3]);
+  gyroSensor.GetGravity(rawGravity[0],rawGravity[1], rawGravity[2]);
   gravity.push_back(rawGravity[0]);
+  gravity.push_back(rawGravity[1]);
   gravity.push_back(rawGravity[2]);
-  gravity.push_back(rawGravity[3]);
   return gravity;
 }
 
 Variant SDLGyro::getCalibratedGyro(){
   TypedArray<float> calibratedgyro;
-  gyroSensor.GetCalibratedGyro(rawCalibratedGyro[0],rawCalibratedGyro[1], rawCalibratedGyro[3]);
+  gyroSensor.GetCalibratedGyro(rawCalibratedGyro[0],rawCalibratedGyro[1], rawCalibratedGyro[2]);
   calibratedgyro.push_back(rawCalibratedGyro[0]);
+  calibratedgyro.push_back(rawCalibratedGyro[1]);
   calibratedgyro.push_back(rawCalibratedGyro[2]);
-  calibratedgyro.push_back(rawCalibratedGyro[3]);
   return calibratedgyro;
 }
 Variant SDLGyro::getProcessedAcceleration(){
   TypedArray<float> processedAcc;
-  gyroSensor.GetCalibratedGyro(rawProcessedAcc[0],rawProcessedAcc[1], rawProcessedAcc[3]);
+  gyroSensor.GetCalibratedGyro(rawProcessedAcc[0],rawProcessedAcc[1], rawProcessedAcc[2]);
   processedAcc.push_back(rawProcessedAcc[0]);
+  processedAcc.push_back(rawProcessedAcc[1]);
   processedAcc.push_back(rawProcessedAcc[2]);
-  processedAcc.push_back(rawProcessedAcc[3]);
   return processedAcc;
 }
 

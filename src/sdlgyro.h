@@ -19,7 +19,7 @@ using namespace godot;
       Variant getPlayer_space();//not working
       Variant getWorld_space();//not working
 
-      Variant getGravity();
+      Variant getGravity();//not working
   
       Variant getCalibratedGyro();
 
