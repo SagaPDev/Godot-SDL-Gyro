@@ -44,7 +44,7 @@ GamepadMotion gyroSensor;
 void SDLGyro::_bind_methods() {
   ClassDB::bind_method(D_METHOD("sdl_init"),&SDLGyro::sdl_init);
   ClassDB::bind_method(D_METHOD("controller_init"),&SDLGyro::controller_init);
-  ClassDB::bind_method(D_METHOD("gamepadPoling"),&SDLGyro::gamepadPoling);
+  ClassDB::bind_method(D_METHOD("gamepadPolling"),&SDLGyro::gamepadPolling);
   ClassDB::bind_method(D_METHOD("calibrate"),&SDLGyro::calibrate);
   ClassDB::bind_method(D_METHOD("stop_calibrate"),&SDLGyro::stop_calibrate);
   ClassDB::bind_method(D_METHOD("getPlayer_space"),&SDLGyro::getPlayer_space);
@@ -160,7 +160,7 @@ void SDLGyro::controller_init(){
 }
 
 
-Variant SDLGyro::gamepadPoling(){
+Variant SDLGyro::gamepadPolling(){
   TypedArray<float> orientation;
   //IMU gyro
   if (gyroEnabled && accelEnabled){

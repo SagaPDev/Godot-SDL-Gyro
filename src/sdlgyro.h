@@ -11,7 +11,7 @@ using namespace godot;
       void sdl_init();
       void controller_init();
 
-      Variant gamepadPoling();
+      Variant gamepadPolling();
 
       void calibrate();
       void stop_calibrate();
