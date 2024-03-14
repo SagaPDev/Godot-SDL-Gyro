@@ -47,6 +47,9 @@ $ git clone https://github.com/SagaPDev/Godot-SDL-Gamepad-Test.git
 $ cd Godot-SDL-Gamepad-Test
 $ scons
 ~~~
-
+## TO DO:  
+Hot Plugin   
+Suport for Multiple Gamepads   
+Release on Godot's Asset Library   
 ## Aditional Credits
 Source of the [3Dmodel](https://sketchfab.com/3d-models/ps4-controller-from-3d-controller-overlay-d8569dc4e3af46a4b137f2926423f195) by [larf](https://sketchfab.com/larf)
