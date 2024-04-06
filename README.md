@@ -19,7 +19,7 @@ func _ready():
 ~~~
 call  any of the folloing functions in the process fuction
 ~~~
-      gamepadPoling()            //returns controller orientation(this function needs to be called so that the others can work)
+      gamepadPolling()            //returns controller orientation(this function needs to be called so that the others can work)
 
       calibrate()                //starts continous calibrations
       stop_calibrate()           //stops continius calibration
