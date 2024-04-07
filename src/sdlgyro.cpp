@@ -44,14 +44,14 @@ GamepadMotion gyroSensor;
 void SDLGyro::_bind_methods() {
   ClassDB::bind_method(D_METHOD("sdl_init"),&SDLGyro::sdl_init);
   ClassDB::bind_method(D_METHOD("controller_init"),&SDLGyro::controller_init);
-  ClassDB::bind_method(D_METHOD("gamepadPolling"),&SDLGyro::gamepadPolling);
+  ClassDB::bind_method(D_METHOD("gamepad_polling"),&SDLGyro::gamepadPolling);
   ClassDB::bind_method(D_METHOD("calibrate"),&SDLGyro::calibrate);
   ClassDB::bind_method(D_METHOD("stop_calibrate"),&SDLGyro::stop_calibrate);
-  ClassDB::bind_method(D_METHOD("getPlayer_space"),&SDLGyro::getPlayer_space);
-  ClassDB::bind_method(D_METHOD("getWorld_space"),&SDLGyro::getWorld_space);
-  ClassDB::bind_method(D_METHOD("getGravity"),&SDLGyro::getGravity);
-  ClassDB::bind_method(D_METHOD("getCalibratedGyro"),&SDLGyro::getCalibratedGyro);
-  ClassDB::bind_method(D_METHOD("getProcessedAcceleration"),&SDLGyro::getProcessedAcceleration);
+  ClassDB::bind_method(D_METHOD("get_player_space"),&SDLGyro::getPlayer_space);
+  ClassDB::bind_method(D_METHOD("get_world_space"),&SDLGyro::getWorld_space);
+  ClassDB::bind_method(D_METHOD("get_gravity"),&SDLGyro::getGravity);
+  ClassDB::bind_method(D_METHOD("get_calibrated_gyro"),&SDLGyro::getCalibratedGyro);
+  ClassDB::bind_method(D_METHOD("get_processed_acceleration"),&SDLGyro::getProcessedAcceleration);
 }
 
 void SDLGyro::sdl_init() {
