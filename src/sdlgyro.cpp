@@ -202,7 +202,7 @@ Variant SDLGyro::gamepadPolling(){
         break;
     }
   }
-  if (pollingEnabled==true){
+  if (pollingEnabled){
     orientation.push_back(rawOrientation[0]);/*w*/
     orientation.push_back(rawOrientation[1]);/*x*/
     orientation.push_back(rawOrientation[2]);/*y*/
