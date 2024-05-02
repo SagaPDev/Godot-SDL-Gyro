@@ -6,6 +6,8 @@
 #include "GamepadMotion.hpp"
 #include "godot_cpp/variant/array.hpp"
 #include "godot_cpp/variant/typed_array.hpp"
+#include "godot_cpp/variant/vector3.hpp"
+#include "godot_cpp/variant/vector4.hpp"
 #include "godot_cpp/variant/variant.hpp"
 #include <godot_cpp/godot.hpp>
 #include <chrono>
