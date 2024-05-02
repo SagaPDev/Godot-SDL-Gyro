@@ -110,6 +110,7 @@ Variant SDLGyro::getCalibratedGyro(){
   calibratedgyro.push_back(rawCalibratedGyro[0]);
   calibratedgyro.push_back(rawCalibratedGyro[1]);
   calibratedgyro.push_back(rawCalibratedGyro[2]);
+  // Vector3 calibratedgyroVector;
   return calibratedgyro;
 }
 Variant SDLGyro::getProcessedAcceleration(){
@@ -118,6 +119,7 @@ Variant SDLGyro::getProcessedAcceleration(){
   processedAcc.push_back(rawProcessedAcc[0]);
   processedAcc.push_back(rawProcessedAcc[1]);
   processedAcc.push_back(rawProcessedAcc[2]);
+  // Vector3 processedAccVector;
   return processedAcc;
 }
 
