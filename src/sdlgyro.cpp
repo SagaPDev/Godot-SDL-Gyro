@@ -45,8 +45,6 @@ GamepadMotion gyroSensor;
 
 void SDLGyro::_bind_methods() {
   ClassDB::bind_method(D_METHOD("gyro_start"),&SDLGyro::gyro_start);
-  ClassDB::bind_method(D_METHOD("sdl_init"),&SDLGyro::sdl_init);
-  ClassDB::bind_method(D_METHOD("controller_init"),&SDLGyro::controller_init);
   ClassDB::bind_method(D_METHOD("gamepad_polling"),&SDLGyro::gamepadPolling);
   ClassDB::bind_method(D_METHOD("calibrate"),&SDLGyro::calibrate);
   ClassDB::bind_method(D_METHOD("stop_calibrate"),&SDLGyro::stop_calibrate);
@@ -58,8 +56,8 @@ void SDLGyro::_bind_methods() {
 }
 
 void SDLGyro::gyro_start(){
-  sdl_init();
-  controller_init();
+  &SDLGyro::sdl_init;
+  &SDLGyro::controller_init;
 }
 
 void SDLGyro::sdl_init() {
