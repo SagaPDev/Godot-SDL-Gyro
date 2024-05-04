@@ -58,8 +58,8 @@ void SDLGyro::_bind_methods() {
 }
 
 void SDLGyro::gyro_start(){
-  &SDLGyro::sdl_init;
-  &SDLGyro::controller_init;
+  sdl_init();
+  controller_init();
 }
 
 void SDLGyro::sdl_init() {
