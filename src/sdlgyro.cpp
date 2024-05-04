@@ -44,7 +44,8 @@ std::chrono::steady_clock::time_point newTime;
 GamepadMotion gyroSensor;
 
 void SDLGyro::_bind_methods() {
-  ClassDB::bind_method(D_METHOD("gyro_start"),&SDLGyro::gyro_start);
+  ClassDB::bind_method(D_METHOD("sdl_init"),&SDLGyro::sdl_init);
+  ClassDB::bind_method(D_METHOD("controller_init"),&SDLGyro::controller_init);
   ClassDB::bind_method(D_METHOD("gamepad_polling"),&SDLGyro::gamepadPolling);
   ClassDB::bind_method(D_METHOD("calibrate"),&SDLGyro::calibrate);
   ClassDB::bind_method(D_METHOD("stop_calibrate"),&SDLGyro::stop_calibrate);
@@ -53,11 +54,6 @@ void SDLGyro::_bind_methods() {
   ClassDB::bind_method(D_METHOD("get_gravity"),&SDLGyro::getGravity);
   ClassDB::bind_method(D_METHOD("get_calibrated_gyro"),&SDLGyro::getCalibratedGyro);
   ClassDB::bind_method(D_METHOD("get_processed_acceleration"),&SDLGyro::getProcessedAcceleration);
-}
-
-void SDLGyro::gyro_start(){
-  &SDLGyro::sdl_init;
-  &SDLGyro::controller_init;
 }
 
 void SDLGyro::sdl_init() {
