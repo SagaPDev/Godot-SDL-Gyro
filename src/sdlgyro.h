@@ -8,8 +8,7 @@ using namespace godot;
   class SDLGyro : public Object{
     GDCLASS(SDLGyro,Object);
     public:
-      void sdl_init();
-      void controller_init();
+      void gyro_start();
 
       Variant gamepadPolling();
 
