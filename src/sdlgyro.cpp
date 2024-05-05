@@ -106,26 +106,20 @@ Variant SDLGyro::getGravity(){
 
 Variant SDLGyro::getCalibratedGyro(){
   TypedArray<float> calibratedgyro;
-  Vector3 calibratedgyroVector;
   gyroSensor.GetCalibratedGyro(rawCalibratedGyro[0],rawCalibratedGyro[1], rawCalibratedGyro[2]);
   calibratedgyro.push_back(rawCalibratedGyro[0]);
   calibratedgyro.push_back(rawCalibratedGyro[1]);
   calibratedgyro.push_back(rawCalibratedGyro[2]);
-  calibratedgyroVector.push_back(calibratedgyro[0]);
-  calibratedgyroVector.push_back(calibratedgyro[1]);
-  calibratedgyroVector.push_back(calibratedgyro[2]);
+  Vector3 calibratedgyroVector=Vector3(calibratedgyro[0],calibratedgyro[1],calibratedgyro[2]);
   return calibratedgyroVector;
 }
 Variant SDLGyro::getProcessedAcceleration(){
   TypedArray<float> processedAcc;
-  Vector3 processedAccVector;
   gyroSensor.GetCalibratedGyro(rawProcessedAcc[0],rawProcessedAcc[1], rawProcessedAcc[2]);
   processedAcc.push_back(rawProcessedAcc[0]);
   processedAcc.push_back(rawProcessedAcc[1]);
   processedAcc.push_back(rawProcessedAcc[2]);
-  processedAccVector.push_back(processedAcc[0]);
-  processedAccVector.push_back(processedAcc[1]);
-  processedAccVector.push_back(processedAcc[2]);
+  Vector3 processedAccVector=Vector3(processedAcc[0],processedAcc[1],processedAcc[2]);
   return processedAccVector;
 }
 
