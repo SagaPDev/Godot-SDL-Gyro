@@ -34,7 +34,7 @@ call  any of the folloing functions in the process fuction
 ## Build Instructions
 ### Windows  
 [Download SDL2-devel-X.XX.X-mingw.zip](https://github.com/libsdl-org/SDL/releases/latest)
-extract and place the contents of SDL2-X.XX.X\x86_64-w64-mingw32 in here -> libs/mingw_dev_lib (you could change that location in the SConstruct file)   
+extract and place the contetns of SDL2-X.XX.X\x86_64-w64-mingw32 in here -> libs/mingw_dev_lib (you could change that location in the SConstruct file)   
 then:
 ~~~
 $ git clone https://github.com/SagaPDev/Godot-SDL-Gamepad-Test.git
