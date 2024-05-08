@@ -15,7 +15,7 @@ print("CC ",env['CC'])
 print("C++ ",env['CXX'])
 print("Using mngw",env["use_mingw"])
 
-env.Append(CPPPATH=["src/"],LIBS='SDL2')
+env.Append(CPPPATH=["libs/mingw_dev_lib/include"],LIBS='SDL2')
 sources = Glob("src/*.cpp")
 
 if env["platform"] == "windows" and (env["use_mingw"]==True):
