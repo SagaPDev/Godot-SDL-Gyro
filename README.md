@@ -19,17 +19,17 @@ func _ready():
 ~~~
 call  any of the folloing functions in the process fuction
 ~~~
-      gamepadPolling()            //returns controller orientation(this function needs to be called so that the others can work)
+      gamepad_polling()            //returns controller orientation(this function needs to be called so that the others can work)
 
       calibrate()                //starts continous calibrations
       stop_calibrate()           //stops continius calibration
      
-      getPlayer_space()          //not working
-      getWorld_space()           //not working
-      getGravity()               //not working
+      get_player_space()          //not working
+      get_world_space()           //not working
+      get_gravity()               //not working
   
-      getCalibratedGyro();       //retutns the controller's angular velocity in degrees per second
-      getProcessedAcceleration();//returns the controller's current acceleration in g-force with gravity removed
+      get_calibrated_gyro();       //retutns the controller's angular velocity in degrees per second
+      get_processed_acceleration();//returns the controller's current acceleration in g-force with gravity removed
 ~~~
 ## Build Instructions
 ### Windows  
