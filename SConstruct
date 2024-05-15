@@ -11,9 +11,6 @@ env = SConscript("godot-cpp/SConstruct")
 # - CPPDEFINES are for pre-processor defines
 # - LINKFLAGS are for linking flags
 # tweak this if you want to use different folders, or more folders, to store your source code in.
-print("CC ",env['CC'])
-print("C++ ",env['CXX'])
-print("Using mngw",env["use_mingw"])
 
 env.Append(CPPPATH=["libs/mingw_dev_lib/include"],LIBS='SDL2')
 sources = Glob("src/*.cpp")
