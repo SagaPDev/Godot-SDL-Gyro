@@ -1,7 +1,7 @@
 extends Node3D
 
 var Gyro=SDLGyro.new()
-var orientation=Gyro.gamepadPolling()
+var orientation=Gyro.gamepad_polling()
 var actCalibration=false
 var highlight_material = preload("res://button_hightlight.tres")  # Load the material
 @onready var model = $Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode
@@ -30,7 +30,7 @@ func _process(_delta):
 
   model.get_node("Left_Stick").rotation_degrees.x=-lsdirection_vector.x*30
   model.get_node("Left_Stick").rotation_degrees.z=-lsdirection_vector.y*30
-  orientation=Gyro.gamepadPolling()
+  orientation=Gyro.gamepad_polling()
   $Sketchfab_Scene.quaternion=Quaternion(orientation[3],orientation[2],-orientation[1],orientation[0])
 
 func _unhandled_input(event):
