@@ -159,7 +159,8 @@ void SDLGyro::controller_init(){
 
 
 Variant SDLGyro::gamepadPolling(){
-  TypedArray<float> orientation;
+  Vector4 orientation;
+  //TypedArray<float> orientation;
   //IMU gyro
   if (gyroEnabled && accelEnabled){
     SDL_GameControllerGetSensorData(controller,SDL_SENSOR_GYRO, &rawGyro[0], 3);
@@ -201,17 +202,11 @@ Variant SDLGyro::gamepadPolling(){
     }
   }
   if (pollingEnabled){
-    orientation.push_back(rawOrientation[0]);/*w*/
-    orientation.push_back(rawOrientation[1]);/*x*/
-    orientation.push_back(rawOrientation[2]);/*y*/
-    orientation.push_back(rawOrientation[3]);/*z*/
+    orientation = Vector4(rawOrientation[0],rawOrientation[1],rawOrientation[2],rawOrientation[3]);
     return orientation;
     }
   else{
-    orientation.push_back(1.0);/*w*/
-    orientation.push_back(0.0);/*x*/
-    orientation.push_back(0.0);/*y*/
-    orientation.push_back(0.0);/*z*/
+    orientation = Vector4(1.0,0.0,0.0,0.0);
     return orientation;
   }
 }
