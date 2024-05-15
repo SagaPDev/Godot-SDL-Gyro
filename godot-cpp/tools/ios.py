@@ -1,6 +1,7 @@
 import os
 import sys
 import subprocess
+import common_compiler_flags
 from SCons.Variables import *
 
 if sys.version_info < (3,):
@@ -21,7 +22,7 @@ def has_ios_osxcross():
 
 def options(opts):
     opts.Add(BoolVariable("ios_simulator", "Target iOS Simulator", False))
-    opts.Add("ios_min_version", "Target minimum iphoneos/iphonesimulator version", "12.0")
+    opts.Add("ios_min_version", "Target minimum iphoneos/iphonesimulator version", "10.0")
     opts.Add(
         "IOS_TOOLCHAIN_PATH",
         "Path to iOS toolchain",
@@ -104,3 +105,5 @@ def generate(env):
     env.Append(LINKFLAGS=["-isysroot", env["IOS_SDK_PATH"], "-F" + env["IOS_SDK_PATH"]])
 
     env.Append(CPPDEFINES=["IOS_ENABLED", "UNIX_ENABLED"])
+
+    common_compiler_flags.generate(env)

@@ -1,5 +1,5 @@
+cmake_minimum_required(VERSION 3.13)
 project(godot-cpp-test)
-cmake_minimum_required(VERSION 3.6)
 
 set(GODOT_GDEXTENSION_DIR ../gdextension/ CACHE STRING "Path to GDExtension interface header directory")
 set(CPP_BINDINGS_PATH ../ CACHE STRING "Path to C++ bindings")
@@ -59,31 +59,9 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 
 else()
 
-#elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-	# using Clang
-#elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-	# using GCC and maybe MinGW?
-
 	set(GODOT_LINKER_FLAGS "-static-libgcc -static-libstdc++ -Wl,-R,'$$ORIGIN'")
 
-	# Hmm.. maybe to strikt?
 	set(GODOT_COMPILE_FLAGS "-fPIC -g -Wwrite-strings")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wchar-subscripts -Wcomment -Wdisabled-optimization")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wformat -Wformat=2 -Wformat-security -Wformat-y2k")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wimport -Winit-self -Winline -Winvalid-pch -Werror")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wmissing-braces -Wmissing-format-attribute")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wmissing-include-dirs -Wmissing-noreturn -Wpacked -Wpointer-arith")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wredundant-decls -Wreturn-type -Wsequence-point")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wswitch -Wswitch-enum -Wtrigraphs")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wuninitialized -Wunknown-pragmas -Wunreachable-code -Wunused-label")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wunused-value -Wvariadic-macros -Wvolatile-register-var -Wno-error=attributes")
-
-	# -Wshadow -Wextra -Wall -Weffc++ -Wfloat-equal -Wstack-protector -Wunused-parameter -Wsign-compare -Wunused-variable -Wcast-align
-	# -Wunused-function -Wstrict-aliasing -Wstrict-aliasing=2 -Wmissing-field-initializers
-
-	if(NOT CMAKE_SYSTEM_NAME STREQUAL "Android")
-		set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wno-ignored-attributes")
-	endif()
 
 	if(CMAKE_BUILD_TYPE MATCHES Debug)
 		set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -fno-omit-frame-pointer -O0")
@@ -94,7 +72,7 @@ endif()
 
 # Disable exception handling. Godot doesn't use exceptions anywhere, and this
 # saves around 20% of binary size and very significant build time (GH-80513).
-option(GODOT_DISABLE_EXCEPTIONS ON "Force disabling exception handling code")
+option(GODOT_DISABLE_EXCEPTIONS OFF "Force disabling exception handling code")
 if (GODOT_DISABLE_EXCEPTIONS)
 	if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 		set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -D_HAS_EXCEPTIONS=0")

@@ -1,3 +1,4 @@
+import common_compiler_flags
 from SCons.Variables import *
 from SCons.Tool import clang, clangxx
 
@@ -14,9 +15,6 @@ def generate(env):
     if env["use_llvm"]:
         clang.generate(env)
         clangxx.generate(env)
-    elif env["use_hot_reload"]:
-        # Required for extensions to truly unload.
-        env.Append(CXXFLAGS=["-fno-gnu-unique"])
 
     env.Append(CCFLAGS=["-fPIC", "-Wwrite-strings"])
     env.Append(LINKFLAGS=["-Wl,-R,'$$ORIGIN'"])
@@ -37,3 +35,5 @@ def generate(env):
         env.Append(LINKFLAGS=["-march=rv64gc"])
 
     env.Append(CPPDEFINES=["LINUX_ENABLED", "UNIX_ENABLED"])
+
+    common_compiler_flags.generate(env)

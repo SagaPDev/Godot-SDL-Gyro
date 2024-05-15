@@ -110,8 +110,6 @@ def get_file_list(api_filepath, output_dir, headers=False, sources=False):
 
     for native_struct in api["native_structures"]:
         struct_name = native_struct["name"]
-        if struct_name == "ObjectID":
-            continue
         snake_struct_name = camel_to_snake(struct_name)
 
         header_filename = include_gen_folder / "classes" / (snake_struct_name + ".hpp")
@@ -124,7 +122,6 @@ def get_file_list(api_filepath, output_dir, headers=False, sources=False):
             include_gen_folder / "variant" / "builtin_binds.hpp",
             include_gen_folder / "variant" / "utility_functions.hpp",
             include_gen_folder / "variant" / "variant_size.hpp",
-            include_gen_folder / "variant" / "builtin_vararg_methods.hpp",
             include_gen_folder / "classes" / "global_constants.hpp",
             include_gen_folder / "classes" / "global_constants_binds.hpp",
             include_gen_folder / "core" / "version.hpp",
@@ -346,40 +343,6 @@ def generate_builtin_bindings(api, output_dir, build_config):
 
         builtin_binds_file.write("\n".join(builtin_binds))
 
-    # Create a header to implement all builtin class vararg methods and be included in "variant.hpp".
-    builtin_vararg_methods_header = include_gen_folder / "builtin_vararg_methods.hpp"
-    builtin_vararg_methods_header.open("w+").write(
-        generate_builtin_class_vararg_method_implements_header(api["builtin_classes"])
-    )
-
-
-def generate_builtin_class_vararg_method_implements_header(builtin_classes):
-    result = []
-
-    add_header("builtin_vararg_methods.hpp", result)
-
-    header_guard = "GODOT_CPP_BUILTIN_VARARG_METHODS_HPP"
-    result.append(f"#ifndef {header_guard}")
-    result.append(f"#define {header_guard}")
-    result.append("")
-    for builtin_api in builtin_classes:
-        if not "methods" in builtin_api:
-            continue
-        class_name = builtin_api["name"]
-        for method in builtin_api["methods"]:
-            if not method["is_vararg"]:
-                continue
-
-            result += make_varargs_template(
-                method, "is_static" in method and method["is_static"], class_name, False, False, True
-            )
-            result.append("")
-
-    result.append("")
-    result.append(f"#endif // ! {header_guard}")
-
-    return "\n".join(result)
-
 
 def generate_builtin_class_header(builtin_api, size, used_classes, fully_used_classes):
     result = []
@@ -402,7 +365,6 @@ def generate_builtin_class_header(builtin_api, size, used_classes, fully_used_cl
     if class_name == "String":
         result.append("#include <godot_cpp/variant/char_string.hpp>")
         result.append("#include <godot_cpp/variant/char_utils.hpp>")
-        result.append("#include <godot_cpp/classes/global_constants.hpp>")
 
     if class_name == "PackedStringArray":
         result.append("#include <godot_cpp/variant/string.hpp>")
@@ -413,11 +375,12 @@ def generate_builtin_class_header(builtin_api, size, used_classes, fully_used_cl
     if class_name == "PackedVector3Array":
         result.append("#include <godot_cpp/variant/vector3.hpp>")
 
+    if is_packed_array(class_name):
+        result.append("#include <godot_cpp/core/error_macros.hpp>")
+        result.append("#include <initializer_list>")
+
     if class_name == "Array":
         result.append("#include <godot_cpp/variant/array_helpers.hpp>")
-
-    if class_name == "Callable":
-        result.append("#include <godot_cpp/variant/callable_custom.hpp>")
 
     for include in fully_used_classes:
         if include == "TypedArray":
@@ -453,6 +416,8 @@ def generate_builtin_class_header(builtin_api, size, used_classes, fully_used_cl
 
     result.append("")
     result.append("\tstatic struct _MethodBindings {")
+
+    result.append("\t\tGDExtensionTypeFromVariantConstructorFunc from_variant_constructor;")
 
     if "constructors" in builtin_api:
         for constructor in builtin_api["constructors"]:
@@ -495,6 +460,9 @@ def generate_builtin_class_header(builtin_api, size, used_classes, fully_used_cl
     result.append("\tstatic void _init_bindings_constructors_destructor();")
 
     result.append("")
+    result.append(f"\t{class_name}(const Variant *p_variant);")
+
+    result.append("")
     result.append("public:")
 
     result.append(
@@ -521,16 +489,10 @@ def generate_builtin_class_header(builtin_api, size, used_classes, fully_used_cl
 
     # Special cases.
     if class_name == "String" or class_name == "StringName" or class_name == "NodePath":
-        if class_name == "StringName":
-            result.append(f"\t{class_name}(const char *from, bool p_static = false);")
-        else:
-            result.append(f"\t{class_name}(const char *from);")
+        result.append(f"\t{class_name}(const char *from);")
         result.append(f"\t{class_name}(const wchar_t *from);")
         result.append(f"\t{class_name}(const char16_t *from);")
         result.append(f"\t{class_name}(const char32_t *from);")
-    if class_name == "Callable":
-        result.append("\tCallable(CallableCustom *p_custom);")
-        result.append("\tCallableCustom *get_custom() const;")
 
     if "constants" in builtin_api:
         axis_constants_count = 0
@@ -558,7 +520,7 @@ def generate_builtin_class_header(builtin_api, size, used_classes, fully_used_cl
 
             vararg = method["is_vararg"]
             if vararg:
-                result.append("\ttemplate<class... Args>")
+                result.append("\ttemplate<typename... Args>")
 
             method_signature = "\t"
             if "is_static" in method and method["is_static"]:
@@ -588,17 +550,16 @@ def generate_builtin_class_header(builtin_api, size, used_classes, fully_used_cl
 
     # Special cases.
     if class_name == "String":
-        result.append("\tstatic String utf8(const char *from, int len = -1);")
-        result.append("\tvoid parse_utf8(const char *from, int len = -1);")
-        result.append("\tstatic String utf16(const char16_t *from, int len = -1);")
-        result.append("\tvoid parse_utf16(const char16_t *from, int len = -1);")
+        result.append("\tstatic String utf8(const char *from, int64_t len = -1);")
+        result.append("\tvoid parse_utf8(const char *from, int64_t len = -1);")
+        result.append("\tstatic String utf16(const char16_t *from, int64_t len = -1);")
+        result.append("\tvoid parse_utf16(const char16_t *from, int64_t len = -1);")
         result.append("\tCharString utf8() const;")
         result.append("\tCharString ascii() const;")
         result.append("\tChar16String utf16() const;")
         result.append("\tChar32String utf32() const;")
         result.append("\tCharWideString wide_string() const;")
         result.append("\tstatic String num_real(double p_num, bool p_trailing = true);")
-        result.append("\tError resize(int p_size);")
 
     if "members" in builtin_api:
         for member in builtin_api["members"]:
@@ -651,13 +612,13 @@ def generate_builtin_class_header(builtin_api, size, used_classes, fully_used_cl
         result.append("\tString &operator+=(const wchar_t *p_str);")
         result.append("\tString &operator+=(const char32_t *p_str);")
 
-        result.append("\tconst char32_t &operator[](int p_index) const;")
-        result.append("\tchar32_t &operator[](int p_index);")
+        result.append("\tconst char32_t &operator[](int64_t p_index) const;")
+        result.append("\tchar32_t &operator[](int64_t p_index);")
         result.append("\tconst char32_t *ptr() const;")
         result.append("\tchar32_t *ptrw();")
 
     if class_name == "Array":
-        result.append("\ttemplate <class... Args>")
+        result.append("\ttemplate <typename... Args>")
         result.append("\tstatic Array make(Args... args) {")
         result.append("\t\treturn helpers::append_all(Array(), args...);")
         result.append("\t}")
@@ -670,8 +631,8 @@ def generate_builtin_class_header(builtin_api, size, used_classes, fully_used_cl
             return_type = "int32_t"
         elif class_name == "PackedFloat32Array":
             return_type = "float"
-        result.append(f"\tconst {return_type} &operator[](int p_index) const;")
-        result.append(f"\t{return_type} &operator[](int p_index);")
+        result.append(f"\tconst {return_type} &operator[](int64_t p_index) const;")
+        result.append(f"\t{return_type} &operator[](int64_t p_index);")
         result.append(f"\tconst {return_type} *ptr() const;")
         result.append(f"\t{return_type} *ptrw();")
         iterators = """
@@ -740,10 +701,21 @@ def generate_builtin_class_header(builtin_api, size, used_classes, fully_used_cl
 	}
 """
         result.append(iterators.replace("$TYPE", return_type))
+        init_list = """
+    _FORCE_INLINE_ $CLASS(std::initializer_list<$TYPE> p_init) {
+		ERR_FAIL_COND(resize(p_init.size()) != 0);
+
+		size_t i = 0;
+		for (const $TYPE &element : p_init) {
+			set(i++, element);
+		}
+	}
+"""
+        result.append(init_list.replace("$TYPE", return_type).replace("$CLASS", class_name))
 
     if class_name == "Array":
-        result.append("\tconst Variant &operator[](int p_index) const;")
-        result.append("\tVariant &operator[](int p_index);")
+        result.append("\tconst Variant &operator[](int64_t p_index) const;")
+        result.append("\tVariant &operator[](int64_t p_index);")
         result.append("\tvoid set_typed(uint32_t p_type, const StringName &p_class_name, const Variant &p_script);")
         result.append("\tvoid _ref(const Array &p_from) const;")
 
@@ -817,6 +789,10 @@ def generate_builtin_class_source(builtin_api, size, used_classes, fully_used_cl
     result.append("")
 
     result.append(f"void {class_name}::_init_bindings_constructors_destructor() {{")
+
+    result.append(
+        f"\t_method_bindings.from_variant_constructor = internal::gdextension_interface_get_variant_to_type_constructor({enum_type_name});"
+    )
 
     if "constructors" in builtin_api:
         for constructor in builtin_api["constructors"]:
@@ -899,6 +875,11 @@ def generate_builtin_class_source(builtin_api, size, used_classes, fully_used_cl
 
     copy_constructor_index = -1
 
+    result.append(f"{class_name}::{class_name}(const Variant *p_variant) {{")
+    result.append("\t_method_bindings.from_variant_constructor(&opaque, p_variant->_native_ptr());")
+    result.append("}")
+    result.append("")
+
     if "constructors" in builtin_api:
         for constructor in builtin_api["constructors"]:
             method_signature = f"{class_name}::{class_name}("
@@ -964,8 +945,19 @@ def generate_builtin_class_source(builtin_api, size, used_classes, fully_used_cl
             result.append(method_signature + "{")
 
             method_call = "\t"
+            is_ref = False
+
             if "return_type" in method:
-                method_call += f'return internal::_call_builtin_method_ptr_ret<{correct_type(method["return_type"])}>('
+                return_type = method["return_type"]
+                if is_enum(return_type):
+                    method_call += f"return ({get_gdextension_type(correct_type(return_type))})internal::_call_builtin_method_ptr_ret<int64_t>("
+                elif is_pod_type(return_type) or is_variant(return_type):
+                    method_call += f"return internal::_call_builtin_method_ptr_ret<{get_gdextension_type(correct_type(return_type))}>("
+                elif is_refcounted(return_type):
+                    method_call += f"return Ref<{return_type}>::_gde_internal_constructor(internal::_call_builtin_method_ptr_ret_obj<{return_type}>("
+                    is_ref = True
+                else:
+                    method_call += f"return internal::_call_builtin_method_ptr_ret_obj<{return_type}>("
             else:
                 method_call += "internal::_call_builtin_method_ptr_no_ret("
             method_call += f'_method_bindings.method_{method["name"]}, '
@@ -986,6 +978,9 @@ def generate_builtin_class_source(builtin_api, size, used_classes, fully_used_cl
                     result += encode
                     arguments.append(arg_name)
                 method_call += ", ".join(arguments)
+
+            if is_ref:
+                method_call += ")"  # Close Ref<> constructor.
             method_call += ");"
 
             result.append(method_call)
@@ -1089,8 +1084,6 @@ def generate_engine_classes_bindings(api, output_dir, use_template_get_node):
             class_api["alias_for"] = "ClassDB"
         engine_classes[class_api["name"]] = class_api["is_refcounted"]
     for native_struct in api["native_structures"]:
-        if native_struct["name"] == "ObjectID":
-            continue
         engine_classes[native_struct["name"]] = False
         native_structures.append(native_struct["name"])
 
@@ -1218,8 +1211,6 @@ def generate_engine_classes_bindings(api, output_dir, use_template_get_node):
 
     for native_struct in api["native_structures"]:
         struct_name = native_struct["name"]
-        if struct_name == "ObjectID":
-            continue
         snake_struct_name = camel_to_snake(struct_name)
 
         header_filename = include_gen_folder / (snake_struct_name + ".hpp")
@@ -1329,11 +1320,7 @@ def generate_engine_class_header(class_api, used_classes, fully_used_classes, us
 
     if "enums" in class_api:
         for enum_api in class_api["enums"]:
-            if enum_api["is_bitfield"]:
-                result.append(f'\tenum {enum_api["name"]} : uint64_t {{')
-            else:
-                result.append(f'\tenum {enum_api["name"]} {{')
-
+            result.append(f'\tenum {enum_api["name"]} {{')
             for value in enum_api["values"]:
                 result.append(f'\t\t{value["name"]} = {value["value"]},')
             result.append("\t};")
@@ -1384,7 +1371,7 @@ def generate_engine_class_header(class_api, used_classes, fully_used_classes, us
     result.append("protected:")
     # T is the custom class we want to register (from which the call initiates, going up the inheritance chain),
     # B is its base class (can be a custom class too, that's why we pass it).
-    result.append("\ttemplate <class T, class B>")
+    result.append("\ttemplate <typename T, typename B>")
     result.append("\tstatic void register_virtuals() {")
     if class_name != "Object":
         result.append(f"\t\t{inherits}::register_virtuals<T, B>();")
@@ -1430,16 +1417,16 @@ def generate_engine_class_header(class_api, used_classes, fully_used_classes, us
     if class_name == "Object":
         result.append("")
 
-        result.append("\ttemplate<class T>")
+        result.append("\ttemplate<typename T>")
         result.append("\tstatic T *cast_to(Object *p_object);")
 
-        result.append("\ttemplate<class T>")
+        result.append("\ttemplate<typename T>")
         result.append("\tstatic const T *cast_to(const Object *p_object);")
 
         result.append("\tvirtual ~Object() = default;")
 
     elif use_template_get_node and class_name == "Node":
-        result.append("\ttemplate<class T>")
+        result.append("\ttemplate<typename T>")
         result.append(
             "\tT *get_node(const NodePath &p_path) const { return Object::cast_to<T>(get_node_internal(p_path)); }"
         )
@@ -1690,13 +1677,11 @@ def generate_global_constants(api, output_dir):
     header.append(f"#ifndef {header_guard}")
     header.append(f"#define {header_guard}")
     header.append("")
-    header.append("#include <cstdint>")
-    header.append("")
     header.append("namespace godot {")
     header.append("")
 
     for constant in api["global_constants"]:
-        header.append(f'\tconst int {escape_identifier(constant["name"])} = {constant["value"]};')
+        header.append(f'\tconst int64_t {escape_identifier(constant["name"])} = {constant["value"]};')
 
     header.append("")
 
@@ -1704,11 +1689,7 @@ def generate_global_constants(api, output_dir):
         if enum_def["name"].startswith("Variant."):
             continue
 
-        if enum_def["is_bitfield"]:
-            header.append(f'\tenum {enum_def["name"]} : uint64_t {{')
-        else:
-            header.append(f'\tenum {enum_def["name"]} {{')
-
+        header.append(f'\tenum {enum_def["name"]} {{')
         for value in enum_def["values"]:
             header.append(f'\t\t{value["name"]} = {value["value"]},')
         header.append("\t};")
@@ -1778,9 +1759,9 @@ def generate_global_constant_binds(api, output_dir):
             continue
 
         if enum_def["is_bitfield"]:
-            header.append(f'VARIANT_BITFIELD_CAST(godot::{enum_def["name"]});')
+            header.append(f'VARIANT_BITFIELD_CAST({enum_def["name"]});')
         else:
-            header.append(f'VARIANT_ENUM_CAST(godot::{enum_def["name"]});')
+            header.append(f'VARIANT_ENUM_CAST({enum_def["name"]});')
 
     # Variant::Type is not a global enum, but only one line, it is worth to place in this file instead of creating new file.
     header.append(f"VARIANT_ENUM_CAST(godot::Variant::Type);")
@@ -2058,22 +2039,10 @@ def make_signature(
     return function_signature
 
 
-def make_varargs_template(
-    function_data,
-    static=False,
-    class_befor_signature="",
-    with_public_declare=True,
-    with_indent=True,
-    for_builtin_classes=False,
-):
+def make_varargs_template(function_data, static=False):
     result = []
 
-    function_signature = ""
-
-    if with_public_declare:
-        function_signature = "public: "
-
-    function_signature += "template<class... Args> "
+    function_signature = "\tpublic: template<typename... Args> "
 
     if static:
         function_signature += "static "
@@ -2094,8 +2063,6 @@ def make_varargs_template(
     if not function_signature.endswith("*"):
         function_signature += " "
 
-    if len(class_befor_signature) > 0:
-        function_signature += class_befor_signature + "::"
     function_signature += f'{escape_identifier(function_data["name"])}'
 
     method_arguments = []
@@ -2116,7 +2083,7 @@ def make_varargs_template(
     function_signature += " {"
     result.append(function_signature)
 
-    args_array = f"\tstd::array<Variant, {len(method_arguments)} + sizeof...(Args)> variant_args {{ "
+    args_array = f"\t\tstd::array<Variant, {len(method_arguments)} + sizeof...(Args)> variant_args {{ "
     for argument in method_arguments:
         if argument["type"] == "Variant":
             args_array += argument["name"]
@@ -2126,42 +2093,19 @@ def make_varargs_template(
 
     args_array += "Variant(args)... };"
     result.append(args_array)
-    result.append(f"\tstd::array<const Variant *, {len(method_arguments)} + sizeof...(Args)> call_args;")
-    result.append("\tfor(size_t i = 0; i < variant_args.size(); i++) {")
-    result.append("\t\tcall_args[i] = &variant_args[i];")
+    result.append(f"\t\tstd::array<const Variant *, {len(method_arguments)} + sizeof...(Args)> call_args;")
+    result.append("\t\tfor(size_t i = 0; i < variant_args.size(); i++) {")
+    result.append("\t\t\tcall_args[i] = &variant_args[i];")
+    result.append("\t\t}")
+
+    call_line = "\t\t"
+
+    if return_type != "void":
+        call_line += "return "
+
+    call_line += f'{escape_identifier(function_data["name"])}_internal(call_args.data(), variant_args.size());'
+    result.append(call_line)
     result.append("\t}")
-
-    call_line = "\t"
-
-    if not for_builtin_classes:
-        if return_type != "void":
-            call_line += "return "
-
-        call_line += f'{escape_identifier(function_data["name"])}_internal(call_args.data(), variant_args.size());'
-        result.append(call_line)
-    else:
-        base = "(GDExtensionTypePtr)&opaque"
-        if static:
-            base = "nullptr"
-
-        ret = "nullptr"
-        if return_type != "void":
-            ret = "&ret"
-            result.append(f'\t{correct_type(function_data["return_type"])} ret;')
-
-        function_name = function_data["name"]
-        result.append(
-            f"\t_method_bindings.method_{function_name}({base}, reinterpret_cast<GDExtensionConstTypePtr *>(call_args.data()), {ret}, {len(method_arguments)} + sizeof...(Args));"
-        )
-
-        if return_type != "void":
-            result.append("\treturn ret;")
-
-    result.append("}")
-
-    if with_indent:
-        for i in range(len(result)):
-            result[i] = "\t" + result[i]
 
     return result
 
@@ -2433,6 +2377,7 @@ def get_operator_id_name(op):
         "unary-": "negate",
         "unary+": "positive",
         "%": "module",
+        "**": "power",
         "<<": "shift_left",
         ">>": "shift_right",
         "&": "bit_and",
