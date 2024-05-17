@@ -6,6 +6,8 @@
 #include "GamepadMotion.hpp"
 #include "godot_cpp/variant/array.hpp"
 #include "godot_cpp/variant/typed_array.hpp"
+#include "godot_cpp/variant/vector3.hpp"
+#include "godot_cpp/variant/vector4.hpp"
 #include "godot_cpp/variant/variant.hpp"
 #include <godot_cpp/godot.hpp>
 #include <chrono>
@@ -103,19 +105,15 @@ Variant SDLGyro::getGravity(){
 }
 
 Variant SDLGyro::getCalibratedGyro(){
-  TypedArray<float> calibratedgyro;
+  Vector3 calibratedgyro;
   gyroSensor.GetCalibratedGyro(rawCalibratedGyro[0],rawCalibratedGyro[1], rawCalibratedGyro[2]);
-  calibratedgyro.push_back(rawCalibratedGyro[0]);
-  calibratedgyro.push_back(rawCalibratedGyro[1]);
-  calibratedgyro.push_back(rawCalibratedGyro[2]);
+  calibratedgyro=Vector3(rawCalibratedGyro[0],rawCalibratedGyro[1],rawCalibratedGyro[2]);
   return calibratedgyro;
 }
 Variant SDLGyro::getProcessedAcceleration(){
-  TypedArray<float> processedAcc;
+  Vector3 processedAcc;
   gyroSensor.GetCalibratedGyro(rawProcessedAcc[0],rawProcessedAcc[1], rawProcessedAcc[2]);
-  processedAcc.push_back(rawProcessedAcc[0]);
-  processedAcc.push_back(rawProcessedAcc[1]);
-  processedAcc.push_back(rawProcessedAcc[2]);
+  processedAcc=Vector3(rawProcessedAcc[0],rawProcessedAcc[1],rawProcessedAcc[2]);
   return processedAcc;
 }
 
@@ -161,7 +159,8 @@ void SDLGyro::controller_init(){
 
 
 Variant SDLGyro::gamepadPolling(){
-  TypedArray<float> orientation;
+  Vector4 orientation;
+  //TypedArray<float> orientation;
   //IMU gyro
   if (gyroEnabled && accelEnabled){
     SDL_GameControllerGetSensorData(controller,SDL_SENSOR_GYRO, &rawGyro[0], 3);
@@ -202,18 +201,12 @@ Variant SDLGyro::gamepadPolling(){
         break;
     }
   }
-  if (pollingEnabled==true){
-    orientation.push_back(rawOrientation[0]);/*w*/
-    orientation.push_back(rawOrientation[1]);/*x*/
-    orientation.push_back(rawOrientation[2]);/*y*/
-    orientation.push_back(rawOrientation[3]);/*z*/
+  if (pollingEnabled){
+    orientation = Vector4(rawOrientation[0],rawOrientation[1],rawOrientation[2],rawOrientation[3]);
     return orientation;
     }
   else{
-    orientation.push_back(1.0);/*w*/
-    orientation.push_back(0.0);/*x*/
-    orientation.push_back(0.0);/*y*/
-    orientation.push_back(0.0);/*z*/
+    orientation = Vector4(1.0,0.0,0.0,0.0);
     return orientation;
   }
 }
