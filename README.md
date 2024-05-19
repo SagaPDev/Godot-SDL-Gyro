@@ -28,8 +28,8 @@ call  any of the folloing functions in the process fuction
       get_world_space()           //not working
       get_gravity()               //not working
   
-      get_calibrated_gyro();       //retutns the controller's angular velocity in degrees per second
-      get_processed_acceleration();//returns the controller's current acceleration in g-force with gravity removed
+      get_calibrated_gyro()        //retutns the controller's angular velocity in degrees per second
+      get_processed_acceleration() //returns the controller's current acceleration in g-force with gravity removed
 ~~~
 ## Build Instructions
 ### Windows  
