@@ -5,13 +5,13 @@ compatibility_minimum = "4.1"
 
 [libraries]
 
-macos.debug = "res://addons/godot-sdl-gyro/libsdlgyro.macos.template_debug.framework"
-macos.release = "res://addons/godot-sdl-gyro/libsdlgyro.macos.template_release.framework"
+macos.debug = "libsdlgyro.macos.template_debug.framework"
+macos.release = "libsdlgyro.macos.template_release.framework"
 
-windows.debug.x86_32 = "res://addons/godot-sdl-gyro/sdlgyro.windows.template_debug.x86_32.dll"
-windows.release.x86_32 = "res://addons/godot-sdl-gyro/sdlgyro.windows.template_release.x86_32.dll"
-windows.debug.x86_64 = "res://addons/godot-sdl-gyro/sdlgyro.windows.template_debug.x86_64.dll"
-windows.release.x86_64 = "res://addons/godot-sdl-gyro/sdlgyro.windows.template_release.x86_64.dll"
+windows.debug.x86_32 = "libsdlgyro.windows.template_debug.x86_32.dll"
+windows.release.x86_32 = "libsdlgyro.windows.template_release.x86_32.dll"
+windows.debug.x86_64 = "libsdlgyro.windows.template_debug.x86_64.dll"
+windows.release.x86_64 = "libsdlgyro.windows.template_release.x86_64.dll"
 
-linux.debug.x86_64 = "res://addons/godot-sdl-gyro/libsdlgyro.linux.template_debug.x86_64.so"
-linux.release.x86_64 = "res://addons/godot-sdl-gyro/libsdlgyro.linux.template_release.x86_64.so"
+linux.debug.x86_64 = "libsdlgyro.linux.template_debug.x86_64.so"
+linux.release.x86_64 = "libsdlgyro.linux.template_release.x86_64.so"
