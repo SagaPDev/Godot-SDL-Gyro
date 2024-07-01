@@ -6,6 +6,7 @@
 #include "GamepadMotion.hpp"
 #include "godot_cpp/variant/array.hpp"
 #include "godot_cpp/variant/typed_array.hpp"
+#include "godot_cpp/variant/vector2.hpp"
 #include "godot_cpp/variant/vector3.hpp"
 #include "godot_cpp/variant/vector4.hpp"
 #include "godot_cpp/variant/variant.hpp"
@@ -82,25 +83,21 @@ void SDLGyro::stop_calibrate(){
 
 //Convert To 2D
 Variant SDLGyro::getPlayer_space(){
-  TypedArray<float> playerSpace;
+  Vector2 playerSpace;
   gyroSensor.GetWorldSpaceGyro(rawPlaySpace[0],rawPlaySpace[1],sideReductionThreshold);
-  playerSpace.push_back(rawPlaySpace[0]);
-  playerSpace.push_back(rawPlaySpace[1]);
+  playerSpace=Vector2(rawPlaySpace[0],rawPlaySpace[1]);
   return playerSpace;
 }
 Variant SDLGyro::getWorld_space(){
-  TypedArray<float> worldSpace;
+  Vector2 worldSpace;
   gyroSensor.GetPlayerSpaceGyro(rawWorldSpace[0],rawWorldSpace[1],yawRelaxFactor);
-  worldSpace.push_back(rawWorldSpace[0]);
-  worldSpace.push_back(rawWorldSpace[1]);
+  worldSpace=Vector2(rawWorldSpace[0],rawWorldSpace[1]);
   return worldSpace;
 }
 Variant SDLGyro::getGravity(){
-  TypedArray<float> gravity;
+  Vector3 gravity;
   gyroSensor.GetGravity(rawGravity[0],rawGravity[1], rawGravity[2]);
-  gravity.push_back(rawGravity[0]);
-  gravity.push_back(rawGravity[1]);
-  gravity.push_back(rawGravity[2]);
+  gravity=Vector3(rawGravity[0],rawGravity[1],rawGravity[2]);
   return gravity;
 }
 
