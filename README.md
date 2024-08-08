@@ -1,7 +1,7 @@
 # Godot SDL Gyro
 GDextention that allows to read Gyro from a controller in Godot 4, it utilizes SDL and JibbSmart [GamepadMotionHelpers](https://github.com/JibbSmart/GamepadMotionHelpers) libraries
 ## Usage
-Download the latest build from the [Releases](https://github.com/SagaPDev/Godot-SDL-Gyro/releases/latest) tab Extract the addons folder and place it in the root of your project
+Download the latest build from [Here](https://github.com/SagaPDev/Godot-SDL-Gyro/releases/latest/download/godot-sdl-gyro-addon.zip), extract the `addons` folder and place it in the root of your project
 
 in your GDscript make a new SDLGyro object
 ~~~
