@@ -1,7 +1,7 @@
 [gd_scene load_steps=59 format=3 uid="uid://bnyxsfryy1ljh"]
 
 [ext_resource type="Script" path="res://test.gd" id="1_dybe0"]
-[ext_resource type="Texture2D" uid="uid://c0fjx3rjcbvlp" path="res://icon.svg" id="2_s3whq"]
+[ext_resource type="Texture2D" uid="uid://b7nq8du63v6ij" path="res://icon.svg" id="2_s3whq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b4nas"]
 
