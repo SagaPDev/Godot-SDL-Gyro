@@ -1,11 +1,9 @@
 #include "sdlgyro.h"
-#include <array>
 #include <godot_cpp/core/class_db.hpp>
 #include <SDL2/SDL.h>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include "GamepadMotion.hpp"
 #include "godot_cpp/variant/array.hpp"
-#include "godot_cpp/variant/typed_array.hpp"
 #include "godot_cpp/variant/vector2.hpp"
 #include "godot_cpp/variant/vector3.hpp"
 #include "godot_cpp/variant/vector4.hpp"
@@ -23,17 +21,10 @@ bool gyroEnabled=false;
 bool accelEnabled=false;
 float deltaTime=0.0;
 
-std::array<float, 3> rawGyro;
-std::array<float, 3> rawAccel;
-std::array<float, 4> rawOrientation;
+Vector3 Gyro;
+Vector3 Accel;
+Vector4 Orientation;
 
-std::array<float, 2> rawPlaySpace;
-std::array<float, 2> rawWorldSpace;
-
-std::array<float, 3> rawGravity;
-std::array<float, 3> rawCalibratedGyro;
-
-std::array<float, 3> rawProcessedAcc;
 
 static constexpr float toDegPerSec = float(180. / M_PI);
 static constexpr float toGs = 1.f / 9.8f;
@@ -84,33 +75,28 @@ void SDLGyro::stop_calibrate(){
 //Convert To 2D
 Variant SDLGyro::getPlayer_space(){
   Vector2 playerSpace;
-  gyroSensor.GetWorldSpaceGyro(rawPlaySpace[0],rawPlaySpace[1],sideReductionThreshold);
-  playerSpace=Vector2(rawPlaySpace[0],rawPlaySpace[1]);
+  gyroSensor.GetWorldSpaceGyro(playerSpace[0],playerSpace[1],sideReductionThreshold);
   return playerSpace;
 }
 Variant SDLGyro::getWorld_space(){
   Vector2 worldSpace;
-  gyroSensor.GetPlayerSpaceGyro(rawWorldSpace[0],rawWorldSpace[1],yawRelaxFactor);
-  worldSpace=Vector2(rawWorldSpace[0],rawWorldSpace[1]);
+  gyroSensor.GetPlayerSpaceGyro(worldSpace[0],worldSpace[1],yawRelaxFactor);
   return worldSpace;
 }
 Variant SDLGyro::getGravity(){
   Vector3 gravity;
-  gyroSensor.GetGravity(rawGravity[0],rawGravity[1], rawGravity[2]);
-  gravity=Vector3(rawGravity[0],rawGravity[1],rawGravity[2]);
+  gyroSensor.GetGravity(gravity[0],gravity[1], gravity[2]);
   return gravity;
 }
 
 Variant SDLGyro::getCalibratedGyro(){
   Vector3 calibratedgyro;
-  gyroSensor.GetCalibratedGyro(rawCalibratedGyro[0],rawCalibratedGyro[1], rawCalibratedGyro[2]);
-  calibratedgyro=Vector3(rawCalibratedGyro[0],rawCalibratedGyro[1],rawCalibratedGyro[2]);
+  gyroSensor.GetCalibratedGyro(calibratedgyro[0],calibratedgyro[1], calibratedgyro[2]);
   return calibratedgyro;
 }
 Variant SDLGyro::getProcessedAcceleration(){
   Vector3 processedAcc;
-  gyroSensor.GetCalibratedGyro(rawProcessedAcc[0],rawProcessedAcc[1], rawProcessedAcc[2]);
-  processedAcc=Vector3(rawProcessedAcc[0],rawProcessedAcc[1],rawProcessedAcc[2]);
+  gyroSensor.GetCalibratedGyro(processedAcc[0],processedAcc[1], processedAcc[2]);
   return processedAcc;
 }
 
@@ -154,24 +140,27 @@ void SDLGyro::controller_init(){
   }
 }
 
+void SDLGyro::setAutoCalibration(){
+  gyroSensor.SetCalibrationMode(GamepadMotionHelpers::Stillness | GamepadMotionHelpers::SensorFusion);
+}
 
 Variant SDLGyro::gamepadPolling(){
   Vector4 orientation;
   //TypedArray<float> orientation;
   //IMU gyro
   if (gyroEnabled && accelEnabled){
-    SDL_GameControllerGetSensorData(controller,SDL_SENSOR_GYRO, &rawGyro[0], 3);
+    SDL_GameControllerGetSensorData(controller,SDL_SENSOR_GYRO, &Gyro[0], 3);
   //IMU accelerometer//
-    SDL_GameControllerGetSensorData(controller,SDL_SENSOR_ACCEL, &rawAccel[0], 3);
+    SDL_GameControllerGetSensorData(controller,SDL_SENSOR_ACCEL, &Accel[0], 3);
   //Sensor Fussion//
     if (oldTime!=newTime)
       newTime=std::chrono::steady_clock::now();
     deltaTime=((float)std::chrono::duration_cast<std::chrono::microseconds>(newTime-oldTime).count()) / 1000000.0f;
 
-    gyroSensor.ProcessMotion(rawGyro[0]*toDegPerSec, rawGyro[1]*toDegPerSec, rawGyro[2]*toDegPerSec, rawAccel[0]*toGs, rawAccel[1]*toGs, rawAccel[2]*toGs,deltaTime);
+    gyroSensor.ProcessMotion(Gyro[0]*toDegPerSec, Gyro[1]*toDegPerSec, Gyro[2]*toDegPerSec, Accel[0]*toGs, Accel[1]*toGs, Accel[2]*toGs,deltaTime);
     oldTime=std::chrono::steady_clock::now();
 
-    gyroSensor.GetOrientation(rawOrientation[0], rawOrientation[1], rawOrientation[2], rawOrientation[3]);
+    gyroSensor.GetOrientation(orientation[0], orientation[1], orientation[2], orientation[3]);
   }
 
   //event loop//
@@ -199,7 +188,6 @@ Variant SDLGyro::gamepadPolling(){
     }
   }
   if (pollingEnabled){
-    orientation = Vector4(rawOrientation[0],rawOrientation[1],rawOrientation[2],rawOrientation[3]);
     return orientation;
     }
   else{
