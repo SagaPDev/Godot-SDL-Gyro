@@ -26,6 +26,9 @@ using namespace godot;
       Variant getProcessedAcceleration();
 
       void setAutoCalibration();
+      bool isCalibrationSteady();
+      float getCalibrationConfidence();
+
     protected:
       static void _bind_methods();
   };
