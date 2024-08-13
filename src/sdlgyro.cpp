@@ -46,6 +46,7 @@ void SDLGyro::_bind_methods() {
   ClassDB::bind_method(D_METHOD("get_gravity"),&SDLGyro::getGravity);
   ClassDB::bind_method(D_METHOD("get_calibrated_gyro"),&SDLGyro::getCalibratedGyro);
   ClassDB::bind_method(D_METHOD("get_processed_acceleration"),&SDLGyro::getProcessedAcceleration);
+  ClassDB::bind_method(D_METHOD("set_auto_calibration"),&SDLGyro::setAutoCalibration);
 }
 
 void SDLGyro::sdl_init() {

@@ -25,6 +25,7 @@ using namespace godot;
 
       Variant getProcessedAcceleration();
 
+      void setAutoCalibration();
     protected:
       static void _bind_methods();
   };
