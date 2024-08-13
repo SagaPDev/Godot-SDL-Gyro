@@ -9,6 +9,7 @@ var highlight_material = preload("res://button_hightlight.tres")  # Load the mat
 func _ready():
   Gyro.sdl_init()
   Gyro.controller_init()
+  Gyro.set_auto_calibration()
 func _process(_delta):
   var rsdirection_vector=Vector3.ZERO
   var lsdirection_vector=Vector3.ZERO
