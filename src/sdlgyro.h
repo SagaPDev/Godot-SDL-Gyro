@@ -28,7 +28,6 @@ using namespace godot;
       void setAutoCalibration();
       bool isCalibrationSteady();
       float getCalibrationConfidence();
-
     protected:
       static void _bind_methods();
   };

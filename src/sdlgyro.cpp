@@ -46,11 +46,8 @@ void SDLGyro::_bind_methods() {
   ClassDB::bind_method(D_METHOD("get_calibrated_gyro"),&SDLGyro::getCalibratedGyro);
   ClassDB::bind_method(D_METHOD("get_processed_acceleration"),&SDLGyro::getProcessedAcceleration);
   ClassDB::bind_method(D_METHOD("set_auto_calibration"),&SDLGyro::setAutoCalibration);
-
   ClassDB::bind_method(D_METHOD("is_gyro_steady"),&SDLGyro::isCalibrationSteady);
   ClassDB::bind_method(D_METHOD("get_calibration_confidence"),&SDLGyro::getCalibrationConfidence);
-
-
 }
 
 void SDLGyro::sdl_init() {
@@ -72,6 +69,7 @@ void SDLGyro::calibrate(){
   pollingEnabled=false;
   gyroSensor.StartContinuousCalibration(); 
 }
+
 void SDLGyro::stop_calibrate(){
   gyroSensor.PauseContinuousCalibration();
   pollingEnabled=true;
