@@ -88,12 +88,12 @@ float SDLGyro::getCalibrationConfidence(){
 //Convert To 2D
 Variant SDLGyro::getPlayer_space(){
   Vector2 playerSpace;
-  gyroSensor.GetWorldSpaceGyro(playerSpace[0],playerSpace[1],sideReductionThreshold);
+  gyroSensor.GetWorldSpaceGyro(playerSpace[0],playerSpace[1]);
   return playerSpace;
 }
 Variant SDLGyro::getWorld_space(){
   Vector2 worldSpace;
-  gyroSensor.GetPlayerSpaceGyro(worldSpace[0],worldSpace[1],yawRelaxFactor);
+  gyroSensor.GetPlayerSpaceGyro(worldSpace[0],worldSpace[1]);
   return worldSpace;
 }
 Variant SDLGyro::getGravity(){
