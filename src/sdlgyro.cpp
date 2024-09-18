@@ -130,7 +130,7 @@ void SDLGyro::controller_init(){
       //test accelerometer
       if (SDL_GameControllerHasSensor(test_controller,SDL_SENSOR_ACCEL)){
         //UtilityFunctions::print("accelerometer Detected\n");
-        SDL_GameControllerSetSensorEnabled(controller,SDL_SENSOR_ACCEL,SDL_TRUE);
+        SDL_GameControllerSetSensorEnabled(test_controller,SDL_SENSOR_ACCEL,SDL_TRUE);
         test_accelEnabled=true;
       }
       else{
