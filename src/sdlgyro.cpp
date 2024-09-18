@@ -77,6 +77,14 @@ void SDLGyro::stop_calibrate(){
   pollingEnabled=true;
 }
 
+bool SDLGyro::isCalibrationSteady(){
+  return gyroSensor.GetAutoCalibrationIsSteady();
+}
+
+float SDLGyro::getCalibrationConfidence(){
+  return gyroSensor.GetAutoCalibrationConfidence();
+}
+
 //Convert To 2D
 Variant SDLGyro::getPlayer_space(){
   Vector2 playerSpace;
