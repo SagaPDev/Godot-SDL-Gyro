@@ -28,8 +28,7 @@ Vector4 Orientation;
 
 static constexpr float toDegPerSec = float(180. / M_PI);
 static constexpr float toGs = 1.f / 9.8f;
-const float sideReductionThreshold = 0.125f;
-const float yawRelaxFactor = 1.41f;
+
 std::chrono::steady_clock::time_point oldTime;
 std::chrono::steady_clock::time_point newTime;
 
