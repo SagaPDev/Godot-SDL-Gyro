@@ -13,6 +13,20 @@ using namespace godot;
 
       Variant gamepadPolling();
 
+      // Modificacion Multiples controles
+      Array get_available_gyro_controllers();
+      String get_gamepad_name(int controller_index);
+      Variant poll_motion_data(int controller_index);
+      godot::Dictionary poll_both_joycon_gyros(int controller_index);
+      // Funciones para Joy-Con
+      void init_joycons();
+      Dictionary joycon_polling();
+      void joycon_calibrate();
+      void joycon_stop_calibrate();
+      Variant get_joycon_l_orientation();
+      Variant get_joycon_r_orientation();
+
+
       void calibrate();
       void stop_calibrate();
 
